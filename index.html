@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#1E3A5F" />
+<title>Iara Modas Calçados — Moda e conforto que te reconhecem · Leme/SP</title>
+<meta name="description" content="Loja de calçados e moda em Leme/SP. Tênis, sandálias, calçados femininos e looks com o atendimento mais acolhedor da cidade. ⭐ 4,6 no Google." />
+<meta property="og:title" content="Iara Modas Calçados — Leme/SP" />
+<meta property="og:description" content="Moda e conforto que te reconhecem. Atendimento acolhedor em Leme/SP." />
+<meta property="og:type" content="website" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+<style>
+/* ============ TOKENS ============ */
+:root{
+  /* Paleta extraída da fachada real: azul marinho + dourado das letras "IARA" + vermelho de "MODAS" */
+  --c-primary:   #1E3A5F;   /* azul marinho da fachada */
+  --c-primary-d: #142845;   /* azul marinho escuro (hover) */
+  --c-bg:        #FAF5EB;   /* creme suave neutro */
+  --c-bg-2:      #F2E9D6;   /* creme mais quente */
+  --c-text:      #142845;   /* azul marinho profundo (texto) */
+  --c-text-soft: #5A6A82;
+  --c-accent:    #D9A03E;   /* dourado das letras IARA */
+  --c-accent-d:  #B58329;   /* dourado escuro */
+  --c-red:       #C44A3D;   /* vermelho do "MODAS" */
+  --c-soft:      #ECD9B3;   /* dourado suave / champagne */
+  --c-line:      #E3D4B5;
+  --c-white:     #FFFCF5;
+
+  --shadow-sm: 0 2px 8px rgba(74, 50, 42, .06);
+  --shadow-md: 0 12px 32px -8px rgba(74, 50, 42, .14);
+  --shadow-lg: 0 24px 60px -12px rgba(74, 50, 42, .22);
+
+  --r-sm: 8px;
+  --r-md: 14px;
+  --r-lg: 22px;
+  --r-xl: 32px;
+  --r-full: 999px;
+
+  --font-display: "Fraunces", "Times New Roman", serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --container: 1200px;
+  --gutter: clamp(20px, 4vw, 56px);
+
+  --t-fast: .25s cubic-bezier(.2,.7,.3,1);
+  --t-med: .5s cubic-bezier(.2,.7,.3,1);
+  --t-slow: .9s cubic-bezier(.2,.7,.3,1);
+}
+
+/* ============ BASE ============ */
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  font-family:var(--font-body);
+  font-size:16px;
+  line-height:1.6;
+  color:var(--c-text);
+  background:var(--c-bg);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  overflow-x:hidden;
+}
+img,svg{display:block;max-width:100%;height:auto}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;border:0;background:transparent;color:inherit}
+
+h1,h2,h3,h4{
+  font-family:var(--font-display);
+  font-weight:500;
+  letter-spacing:-.015em;
+  line-height:1.1;
+  margin:0;
+  color:var(--c-text);
+  font-variation-settings:"opsz" 80, "SOFT" 50;
+}
+h1{font-size:clamp(2.4rem, 6vw + .5rem, 5.4rem)}
+h2{font-size:clamp(1.9rem, 3.2vw + .5rem, 3.4rem)}
+h3{font-size:clamp(1.25rem, 1.2vw + .8rem, 1.6rem)}
+p{margin:0 0 1em}
+
+/* Subtle paper texture overlay */
+body::before{
+  content:"";
+  position:fixed;inset:0;
+  pointer-events:none;
+  z-index:1;
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(74,50,42,.035) 1px, transparent 0);
+  background-size:3px 3px;
+  mix-blend-mode:multiply;
+  opacity:.5;
+}
+
+/* ============ LAYOUT ============ */
+.container{
+  width:100%;
+  max-width:var(--container);
+  margin:0 auto;
+  padding:0 var(--gutter);
+  position:relative;
+}
+
+.eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:.6em;
+  font-family:var(--font-body);
+  font-size:.78rem;
+  font-weight:500;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--c-primary);
+}
+.eyebrow::before{
+  content:"";
+  width:24px;height:1px;
+  background:currentColor;
+}
+
+/* ============ NAVBAR ============ */
+.nav{
+  position:fixed;top:0;left:0;right:0;
+  z-index:100;
+  padding:18px 0;
+  transition:padding var(--t-med), background var(--t-med), backdrop-filter var(--t-med), box-shadow var(--t-med);
+}
+.nav.scrolled{
+  padding:10px 0;
+  background:rgba(248, 241, 231, .72);
+  backdrop-filter:saturate(180%) blur(16px);
+  -webkit-backdrop-filter:saturate(180%) blur(16px);
+  box-shadow:0 1px 0 rgba(74,50,42,.06), 0 8px 32px -16px rgba(74,50,42,.18);
+}
+.nav__inner{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:24px;
+}
+.brand{
+  display:flex;align-items:baseline;gap:.4em;
+  font-family:var(--font-display);
+  font-size:1.45rem;
+  font-weight:600;
+  letter-spacing:-.01em;
+  color:var(--c-text);
+}
+.brand em{
+  font-style:italic;
+  font-weight:500;
+  color:var(--c-red);
+  font-variation-settings:"opsz" 144, "SOFT" 100;
+}
+.brand__dot{
+  display:inline-block;width:6px;height:6px;border-radius:50%;
+  background:var(--c-accent);transform:translateY(-3px);
+}
+.nav__links{
+  display:flex;gap:36px;align-items:center;
+  font-size:.92rem;font-weight:500;
+}
+.nav__links a{
+  position:relative;
+  color:var(--c-text);
+  opacity:.85;
+  transition:opacity var(--t-fast);
+}
+.nav__links a::after{
+  content:"";position:absolute;left:0;bottom:-6px;
+  width:0;height:1.5px;background:var(--c-primary);
+  transition:width var(--t-med);
+}
+.nav__links a:hover{opacity:1}
+.nav__links a:hover::after{width:100%}
+
+.nav__cta{
+  display:inline-flex;align-items:center;gap:.5em;
+  padding:10px 18px;
+  background:var(--c-text);
+  color:var(--c-bg);
+  border-radius:var(--r-full);
+  font-size:.88rem;font-weight:500;
+  transition:transform var(--t-fast), background var(--t-fast);
+}
+.nav__cta:hover{background:var(--c-primary);transform:translateY(-1px)}
+.nav__cta svg{width:16px;height:16px}
+
+.nav__burger{
+  display:none;
+  width:42px;height:42px;
+  align-items:center;justify-content:center;
+  border-radius:var(--r-full);
+}
+.nav__burger span{
+  display:block;width:22px;height:1.5px;background:var(--c-text);
+  position:relative;
+  transition:transform var(--t-fast), background var(--t-fast);
+}
+.nav__burger span::before,
+.nav__burger span::after{
+  content:"";position:absolute;left:0;width:22px;height:1.5px;background:var(--c-text);
+  transition:transform var(--t-fast), top var(--t-fast);
+}
+.nav__burger span::before{top:-7px}
+.nav__burger span::after{top:7px}
+.nav.open .nav__burger span{background:transparent}
+.nav.open .nav__burger span::before{top:0;transform:rotate(45deg)}
+.nav.open .nav__burger span::after{top:0;transform:rotate(-45deg)}
+
+@media (max-width: 860px){
+  .nav__links{
+    position:fixed;inset:0 0 0 auto;width:min(86vw, 360px);
+    background:var(--c-bg);
+    padding:96px 36px 36px;
+    flex-direction:column;align-items:flex-start;gap:20px;
+    transform:translateX(105%);
+    transition:transform var(--t-med);
+    box-shadow:var(--shadow-lg);
+    border-left:1px solid var(--c-line);
+  }
+  .nav.open .nav__links{transform:translateX(0)}
+  .nav__links a{font-size:1.4rem;font-family:var(--font-display);font-weight:400}
+  .nav__cta{font-size:1rem;padding:14px 22px;margin-top:8px}
+  .nav__burger{display:flex;z-index:2}
+}
+
+/* ============ HERO ============ */
+.hero{
+  position:relative;
+  min-height:100vh;
+  padding:140px 0 80px;
+  display:flex;align-items:center;
+  overflow:hidden;
+  background:
+    radial-gradient(ellipse 80% 60% at 82% 18%, rgba(217, 160, 62, .28), transparent 60%),
+    radial-gradient(ellipse 70% 50% at 10% 82%, rgba(30, 58, 95, .10), transparent 60%),
+    var(--c-bg);
+}
+.hero__inner{
+  position:relative;
+  display:grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap:clamp(40px, 6vw, 80px);
+  align-items:center;
+  width:100%;
+}
+.hero__copy{position:relative;z-index:2}
+.hero h1{
+  margin:18px 0 22px;
+}
+.hero h1 em{
+  font-style:italic;
+  color:var(--c-accent-d);
+  font-variation-settings:"opsz" 144, "SOFT" 100;
+}
+.hero__sub{
+  font-size:clamp(1.05rem, .4vw + 1rem, 1.25rem);
+  color:var(--c-text-soft);
+  max-width:520px;
+  margin-bottom:36px;
+  line-height:1.55;
+}
+.hero__ctas{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+
+.btn{
+  display:inline-flex;align-items:center;gap:.6em;
+  padding:16px 28px;
+  border-radius:var(--r-full);
+  font-size:.98rem;font-weight:500;
+  transition:transform var(--t-fast), background var(--t-fast), color var(--t-fast), box-shadow var(--t-fast);
+  white-space:nowrap;
+}
+.btn svg{width:18px;height:18px;transition:transform var(--t-fast)}
+.btn:hover svg{transform:translateX(3px)}
+.btn--primary{
+  background:var(--c-primary);
+  color:var(--c-white);
+  box-shadow:0 8px 20px -6px rgba(30,58,95,.45);
+}
+.btn--primary:hover{background:var(--c-primary-d);transform:translateY(-2px);box-shadow:0 14px 28px -8px rgba(30,58,95,.55)}
+.btn--ghost{
+  background:transparent;
+  color:var(--c-text);
+  border:1.5px solid var(--c-text);
+}
+.btn--ghost:hover{background:var(--c-text);color:var(--c-bg)}
+.btn--wa{
+  background:#25D366;color:#fff;
+  box-shadow:0 8px 20px -6px rgba(37,211,102,.5);
+}
+.btn--wa:hover{background:#1ebd5b;transform:translateY(-2px)}
+
+.hero__rating{
+  display:inline-flex;align-items:center;gap:14px;
+  padding:10px 18px 10px 14px;
+  background:rgba(255,252,247,.7);
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(224,205,184,.6);
+  border-radius:var(--r-full);
+  font-size:.88rem;
+}
+.hero__rating strong{color:var(--c-text);font-weight:600}
+.hero__rating .stars{color:var(--c-accent);letter-spacing:1px;font-size:.95rem}
+
+/* Hero visual — collage of stylized cards */
+.hero__visual{
+  position:relative;
+  aspect-ratio:1/1.05;
+  max-width:520px;
+  margin-left:auto;
+}
+.hero__card{
+  position:absolute;
+  border-radius:var(--r-lg);
+  overflow:hidden;
+  box-shadow:var(--shadow-md);
+  background:var(--c-soft);
+}
+.hero__card--main{
+  inset:0 8% 14% 14%;
+  background:
+    radial-gradient(ellipse at 30% 30%, rgba(255,252,247,.4), transparent 60%),
+    linear-gradient(135deg, #1E3A5F 0%, #142845 100%);
+  transform:rotate(-3deg);
+}
+.hero__card--main::after{
+  content:"";
+  position:absolute;inset:18%;
+  background:
+    radial-gradient(circle at 50% 40%, rgba(248,241,231,.95) 30%, transparent 31%),
+    radial-gradient(circle at 50% 70%, rgba(248,241,231,.7) 18%, transparent 19%);
+}
+.hero__card--accent{
+  width:42%;aspect-ratio:1/1.2;
+  top:6%;right:0;
+  background:linear-gradient(160deg, #D9A03E, #B58329);
+  transform:rotate(6deg);
+  z-index:2;
+}
+.hero__card--accent::after{
+  content:"♥";
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);
+  font-size:5rem;color:rgba(255,252,247,.85);
+  font-style:italic;
+}
+.hero__card--soft{
+  width:38%;aspect-ratio:1/.85;
+  bottom:0;left:0;
+  background:linear-gradient(150deg, #ECD9B3, #D9A03E);
+  transform:rotate(-8deg);
+  z-index:3;
+}
+.hero__card--soft::after{
+  content:"Iara";
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);
+  font-style:italic;
+  font-size:2.2rem;
+  color:var(--c-text);
+  opacity:.85;
+  font-variation-settings:"opsz" 144;
+}
+.hero__badge{
+  position:absolute;
+  top:50%;right:-12%;
+  width:120px;height:120px;
+  background:var(--c-bg);
+  border:1.5px solid var(--c-line);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;
+  z-index:4;
+  font-family:var(--font-display);
+  font-style:italic;
+  font-size:.95rem;
+  color:var(--c-text);
+  line-height:1.2;
+  padding:14px;
+  box-shadow:var(--shadow-sm);
+  animation:slowSpin 22s linear infinite;
+}
+.hero__badge span{font-style:normal;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;font-family:var(--font-body);color:var(--c-primary)}
+@keyframes slowSpin{to{transform:rotate(360deg)}}
+
+@media (max-width:860px){
+  .hero{padding:120px 0 60px;min-height:auto}
+  .hero__inner{grid-template-columns:1fr;gap:48px}
+  .hero__visual{max-width:380px;margin:0 auto}
+  .hero__badge{right:-8%;width:96px;height:96px;font-size:.78rem}
+}
+
+/* ============ MARQUEE ============ */
+.marquee{
+  background:var(--c-text);
+  color:var(--c-bg);
+  overflow:hidden;
+  padding:18px 0;
+  position:relative;z-index:5;
+}
+.marquee__track{
+  display:flex;gap:48px;
+  animation:scroll 32s linear infinite;
+  width:max-content;
+  font-family:var(--font-display);
+  font-style:italic;
+  font-size:1.4rem;
+  font-weight:400;
+  font-variation-settings:"opsz" 144;
+}
+.marquee__track span{display:inline-flex;align-items:center;gap:48px;white-space:nowrap}
+.marquee__track span::after{
+  content:"✦";color:var(--c-accent);font-style:normal;font-size:1rem;
+}
+@keyframes scroll{
+  from{transform:translateX(0)}
+  to{transform:translateX(-50%)}
+}
+
+/* ============ SECTIONS ============ */
+section{position:relative;z-index:2;padding:clamp(80px, 10vw, 140px) 0}
+
+.section-head{
+  max-width:760px;
+  margin-bottom:64px;
+}
+.section-head h2{margin-top:14px}
+.section-head p{
+  margin-top:18px;
+  color:var(--c-text-soft);
+  font-size:1.08rem;
+  max-width:560px;
+}
+.section-head--center{margin-left:auto;margin-right:auto;text-align:center}
+.section-head--center .eyebrow{justify-content:center}
+
+/* ============ SOBRE ============ */
+.sobre{background:var(--c-bg)}
+.sobre__grid{
+  display:grid;
+  grid-template-columns:1fr 1.1fr;
+  gap:clamp(40px, 6vw, 80px);
+  align-items:center;
+}
+.sobre__visual{
+  position:relative;
+  aspect-ratio:4/5;
+  border-radius:var(--r-lg);
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(217,160,62,.45), transparent 60%),
+    linear-gradient(160deg, var(--c-soft), var(--c-accent));
+  box-shadow:var(--shadow-lg);
+}
+.sobre__visual::before{
+  content:"";
+  position:absolute;inset:24px;
+  border:1px solid rgba(255,252,247,.4);
+  border-radius:calc(var(--r-lg) - 8px);
+  pointer-events:none;
+}
+.sobre__visual::after{
+  content:"";
+  position:absolute;inset:0;
+  background:
+    radial-gradient(circle at 50% 65%, rgba(250,245,235,.5) 0%, transparent 50%),
+    radial-gradient(circle at 75% 25%, rgba(30,58,95,.38) 0%, transparent 40%);
+}
+.sobre__visual-tag{
+  position:absolute;
+  bottom:32px;left:32px;
+  background:var(--c-white);
+  padding:14px 20px;
+  border-radius:var(--r-md);
+  font-size:.85rem;font-weight:500;
+  color:var(--c-text);
+  box-shadow:var(--shadow-md);
+  z-index:2;
+}
+.sobre__visual-tag strong{display:block;font-family:var(--font-display);font-size:1.2rem;color:var(--c-primary);margin-bottom:2px}
+
+.sobre__pull{
+  font-family:var(--font-display);
+  font-style:italic;
+  font-size:clamp(1.25rem, 1.4vw + 1rem, 1.85rem);
+  line-height:1.35;
+  color:var(--c-text);
+  border-left:2px solid var(--c-primary);
+  padding-left:24px;
+  margin:32px 0;
+  font-variation-settings:"opsz" 144, "SOFT" 100;
+}
+.sobre__pull cite{
+  display:block;
+  font-style:normal;
+  font-family:var(--font-body);
+  font-size:.85rem;
+  font-weight:500;
+  color:var(--c-primary);
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  margin-top:14px;
+}
+
+.sobre__diffs{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:32px;
+}
+.sobre__diff{
+  display:flex;gap:14px;align-items:flex-start;
+  padding:14px 16px;
+  background:var(--c-white);
+  border-radius:var(--r-md);
+  border:1px solid var(--c-line);
+}
+.sobre__diff svg{flex-shrink:0;color:var(--c-primary);width:22px;height:22px;margin-top:2px}
+.sobre__diff h4{font-family:var(--font-body);font-size:.95rem;font-weight:600;margin:0 0 2px;color:var(--c-text)}
+.sobre__diff p{margin:0;font-size:.82rem;color:var(--c-text-soft);line-height:1.4}
+
+@media (max-width:860px){
+  .sobre__grid{grid-template-columns:1fr;gap:48px}
+  .sobre__visual{max-width:420px;margin:0 auto}
+  .sobre__diffs{grid-template-columns:1fr}
+}
+
+/* ============ CATEGORIAS ============ */
+.categorias{background:var(--c-bg-2)}
+.categorias__grid{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:20px;
+}
+.cat{
+  position:relative;
+  border-radius:var(--r-lg);
+  overflow:hidden;
+  padding:36px 32px;
+  min-height:340px;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  background:var(--c-soft);
+  cursor:pointer;
+  transition:transform var(--t-med), box-shadow var(--t-med);
+  isolation:isolate;
+}
+.cat:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+.cat__icon{
+  position:absolute;
+  top:32px;right:32px;
+  width:64px;height:64px;
+  border-radius:50%;
+  background:rgba(255,252,247,.7);
+  display:flex;align-items:center;justify-content:center;
+  backdrop-filter:blur(8px);
+  transition:transform var(--t-med);
+}
+.cat:hover .cat__icon{transform:rotate(-8deg) scale(1.05)}
+.cat__icon svg{width:32px;height:32px;color:var(--c-primary)}
+.cat__name{
+  font-family:var(--font-display);
+  font-size:1.8rem;
+  font-weight:500;
+  margin-bottom:6px;
+}
+.cat__desc{
+  font-size:.9rem;
+  color:var(--c-text-soft);
+  margin:0;
+}
+.cat__arrow{
+  position:absolute;
+  bottom:32px;right:32px;
+  width:40px;height:40px;
+  border-radius:50%;
+  background:var(--c-text);
+  color:var(--c-bg);
+  display:flex;align-items:center;justify-content:center;
+  transition:transform var(--t-med), background var(--t-med);
+}
+.cat:hover .cat__arrow{background:var(--c-primary);transform:translate(-2px,-2px) rotate(-15deg)}
+.cat__arrow svg{width:18px;height:18px}
+
+.cat--1{
+  grid-column:span 7;
+  background:linear-gradient(135deg, #ECD9B3 0%, #D9A03E 100%);
+}
+.cat--2{
+  grid-column:span 5;
+  background:linear-gradient(135deg, #F2E9D6 0%, #ECD9B3 100%);
+}
+.cat--3{
+  grid-column:span 5;
+  background:linear-gradient(135deg, #1E3A5F 0%, #142845 100%);
+  color:var(--c-white);
+}
+.cat--3 .cat__name,.cat--3 .cat__desc{color:var(--c-white)}
+.cat--3 .cat__desc{opacity:.85}
+.cat--3 .cat__icon{background:rgba(255,252,247,.18)}
+.cat--3 .cat__icon svg{color:var(--c-accent)}
+.cat--3 .cat__arrow{background:var(--c-accent);color:var(--c-primary)}
+.cat--4{
+  grid-column:span 7;
+  background:linear-gradient(135deg, #C44A3D 0%, #9A3328 100%);
+  color:var(--c-white);
+}
+.cat--4 .cat__name{color:var(--c-white);font-style:italic;font-variation-settings:"opsz" 144}
+.cat--4 .cat__desc{color:rgba(255,252,247,.78)}
+.cat--4 .cat__icon{background:rgba(255,252,247,.18)}
+.cat--4 .cat__icon svg{color:var(--c-white)}
+.cat--4 .cat__arrow{background:var(--c-white);color:var(--c-red)}
+
+@media (max-width:860px){
+  .categorias__grid{grid-template-columns:1fr}
+  .cat{grid-column:1!important;min-height:260px;padding:28px 26px}
+  .cat__name{font-size:1.5rem}
+  .cat__icon{width:52px;height:52px;top:24px;right:24px}
+  .cat__icon svg{width:26px;height:26px}
+}
+
+/* ============ AVALIAÇÕES ============ */
+.reviews{background:var(--c-bg)}
+.reviews__head{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  gap:32px;flex-wrap:wrap;margin-bottom:64px;
+}
+.reviews__badge{
+  display:inline-flex;align-items:center;gap:16px;
+  padding:16px 24px;
+  background:var(--c-white);
+  border:1px solid var(--c-line);
+  border-radius:var(--r-lg);
+  box-shadow:var(--shadow-sm);
+}
+.reviews__badge-num{
+  font-family:var(--font-display);
+  font-size:2.4rem;
+  font-weight:600;
+  line-height:1;
+  color:var(--c-primary);
+}
+.reviews__badge-stars{color:var(--c-accent);font-size:1.05rem;letter-spacing:2px;margin-bottom:4px}
+.reviews__badge-meta{font-size:.78rem;color:var(--c-text-soft);font-weight:500}
+.reviews__badge-google{display:flex;align-items:center;gap:6px;font-size:.78rem;color:var(--c-text-soft)}
+
+.reviews__grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:24px;
+}
+.review{
+  background:var(--c-white);
+  border-radius:var(--r-lg);
+  padding:36px 32px;
+  border:1px solid var(--c-line);
+  position:relative;
+  transition:transform var(--t-med), box-shadow var(--t-med);
+}
+.review:hover{transform:translateY(-4px);box-shadow:var(--shadow-md)}
+.review__quote{
+  position:absolute;
+  top:-22px;left:28px;
+  width:48px;height:48px;
+  background:var(--c-primary);
+  color:var(--c-white);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);
+  font-style:italic;
+  font-size:2rem;
+  font-weight:500;
+  line-height:0;
+  padding-top:18px;
+}
+.review__stars{color:var(--c-accent);letter-spacing:3px;font-size:1rem;margin-bottom:18px}
+.review__text{
+  font-family:var(--font-display);
+  font-size:1.15rem;
+  font-style:italic;
+  line-height:1.4;
+  color:var(--c-text);
+  margin-bottom:24px;
+  font-variation-settings:"opsz" 144, "SOFT" 80;
+}
+.review__author{
+  display:flex;align-items:center;gap:12px;
+  padding-top:18px;
+  border-top:1px solid var(--c-line);
+}
+.review__avatar{
+  width:42px;height:42px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--c-soft);
+  color:var(--c-primary);
+  font-weight:600;
+  font-size:.95rem;
+}
+.review__name{font-weight:600;font-size:.92rem;color:var(--c-text);display:block}
+.review__src{font-size:.78rem;color:var(--c-text-soft);display:block;margin-top:2px}
+
+@media (max-width:860px){
+  .reviews__grid{grid-template-columns:1fr;gap:36px}
+  .reviews__head{align-items:flex-start}
+}
+
+/* ============ LOCALIZAÇÃO ============ */
+.local{background:var(--c-bg-2)}
+.local__grid{
+  display:grid;
+  grid-template-columns:.9fr 1.1fr;
+  gap:clamp(32px, 5vw, 64px);
+  align-items:stretch;
+}
+.local__info{
+  background:var(--c-white);
+  border-radius:var(--r-lg);
+  padding:clamp(28px, 4vw, 48px);
+  display:flex;flex-direction:column;
+  box-shadow:var(--shadow-md);
+}
+.local__info h2{margin-bottom:8px}
+.local__info > p{color:var(--c-text-soft);margin-bottom:32px}
+
+.info-row{
+  display:flex;gap:16px;
+  padding:18px 0;
+  border-bottom:1px solid var(--c-line);
+}
+.info-row:last-of-type{border-bottom:0}
+.info-row__icon{
+  flex-shrink:0;
+  width:42px;height:42px;
+  border-radius:12px;
+  background:var(--c-soft);
+  color:var(--c-primary);
+  display:flex;align-items:center;justify-content:center;
+}
+.info-row__icon svg{width:20px;height:20px}
+.info-row__label{
+  font-size:.72rem;font-weight:600;
+  letter-spacing:.15em;text-transform:uppercase;
+  color:var(--c-text-soft);
+  margin-bottom:4px;
+}
+.info-row__value{font-size:1rem;color:var(--c-text);font-weight:500;line-height:1.45}
+.info-row__value a{color:var(--c-primary);transition:opacity var(--t-fast)}
+.info-row__value a:hover{opacity:.7}
+
+.local__map{
+  border-radius:var(--r-lg);
+  overflow:hidden;
+  box-shadow:var(--shadow-md);
+  min-height:480px;
+  position:relative;
+  background:var(--c-soft);
+}
+.local__map iframe{
+  width:100%;height:100%;
+  position:absolute;inset:0;
+  border:0;
+  filter:saturate(.85) contrast(.95);
+}
+
+@media (max-width:860px){
+  .local__grid{grid-template-columns:1fr}
+  .local__map{min-height:340px}
+}
+
+/* ============ CTA FINAL ============ */
+.cta-final{
+  background:var(--c-text);
+  color:var(--c-bg);
+  position:relative;
+  overflow:hidden;
+}
+.cta-final::before{
+  content:"";
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 60% 40% at 80% 30%, rgba(196,74,61,.32), transparent 60%),
+    radial-gradient(ellipse 50% 40% at 20% 80%, rgba(217,160,62,.32), transparent 60%);
+  pointer-events:none;
+}
+.cta-final__inner{
+  position:relative;
+  text-align:center;
+  max-width:760px;
+  margin:0 auto;
+}
+.cta-final h2{color:var(--c-bg);margin-bottom:20px}
+.cta-final h2 em{font-style:italic;color:var(--c-accent);font-variation-settings:"opsz" 144}
+.cta-final p{font-size:1.15rem;color:rgba(248,241,231,.75);margin-bottom:40px}
+.cta-final .btn--wa{font-size:1.05rem;padding:18px 32px}
+
+/* ============ FOOTER ============ */
+.footer{
+  background:var(--c-bg);
+  padding:64px 0 32px;
+  border-top:1px solid var(--c-line);
+}
+.footer__grid{
+  display:grid;
+  grid-template-columns:1.4fr 1fr 1fr 1fr;
+  gap:48px;
+  margin-bottom:48px;
+}
+.footer__brand{font-size:1.8rem;margin-bottom:14px}
+.footer__brand em{font-style:italic;color:var(--c-primary)}
+.footer__tagline{color:var(--c-text-soft);font-size:.95rem;max-width:280px;line-height:1.55}
+.footer__col h4{
+  font-family:var(--font-body);
+  font-size:.75rem;font-weight:600;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--c-primary);
+  margin-bottom:18px;
+}
+.footer__col ul{list-style:none;padding:0;margin:0}
+.footer__col li{margin-bottom:10px;font-size:.92rem;color:var(--c-text-soft);line-height:1.5}
+.footer__col a{color:var(--c-text-soft);transition:color var(--t-fast)}
+.footer__col a:hover{color:var(--c-primary)}
+
+.footer__social{display:flex;gap:10px;margin-top:18px}
+.footer__social a{
+  width:38px;height:38px;
+  border-radius:50%;
+  background:var(--c-white);
+  border:1px solid var(--c-line);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--c-text);
+  transition:background var(--t-fast), color var(--t-fast), transform var(--t-fast);
+}
+.footer__social a:hover{background:var(--c-primary);color:var(--c-white);border-color:var(--c-primary);transform:translateY(-2px)}
+.footer__social svg{width:18px;height:18px}
+
+.footer__bottom{
+  display:flex;justify-content:space-between;align-items:center;
+  padding-top:24px;
+  border-top:1px solid var(--c-line);
+  font-size:.82rem;
+  color:var(--c-text-soft);
+  flex-wrap:wrap;gap:12px;
+}
+
+@media (max-width:860px){
+  .footer__grid{grid-template-columns:1fr 1fr;gap:36px 24px}
+  .footer__col:first-child{grid-column:1/-1}
+  .footer__bottom{flex-direction:column;text-align:center}
+}
+
+/* ============ FLOATING BUTTONS ============ */
+.fab-wa{
+  position:fixed;
+  bottom:24px;right:24px;
+  width:58px;height:58px;
+  background:#25D366;
+  color:#fff;
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  z-index:90;
+  box-shadow:0 10px 28px -6px rgba(37,211,102,.55), 0 4px 12px rgba(37,211,102,.3);
+  transition:transform var(--t-fast), box-shadow var(--t-fast);
+}
+.fab-wa::before{
+  content:"";position:absolute;inset:0;border-radius:50%;
+  background:#25D366;opacity:.4;
+  animation:pulse 2.2s ease-out infinite;
+  z-index:-1;
+}
+@keyframes pulse{
+  0%{transform:scale(1);opacity:.5}
+  100%{transform:scale(1.7);opacity:0}
+}
+.fab-wa:hover{transform:scale(1.08)}
+.fab-wa svg{width:30px;height:30px}
+
+.fab-top{
+  position:fixed;
+  bottom:24px;right:94px;
+  width:46px;height:46px;
+  background:var(--c-text);
+  color:var(--c-bg);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  z-index:89;
+  opacity:0;visibility:hidden;
+  transform:translateY(8px);
+  transition:opacity var(--t-fast), transform var(--t-fast), visibility var(--t-fast), background var(--t-fast);
+  box-shadow:var(--shadow-md);
+}
+.fab-top.visible{opacity:1;visibility:visible;transform:translateY(0)}
+.fab-top:hover{background:var(--c-primary)}
+.fab-top svg{width:18px;height:18px}
+
+@media (max-width:560px){
+  .fab-wa{width:54px;height:54px;bottom:18px;right:18px}
+  .fab-top{width:42px;height:42px;bottom:18px;right:80px}
+}
+
+/* ============ REVEAL ANIMATIONS ============ */
+.reveal{
+  opacity:0;
+  transform:translateY(28px);
+  transition:opacity .9s cubic-bezier(.2,.7,.3,1), transform .9s cubic-bezier(.2,.7,.3,1);
+  will-change:opacity, transform;
+}
+.reveal.in{opacity:1;transform:none}
+.reveal[data-delay="1"]{transition-delay:.1s}
+.reveal[data-delay="2"]{transition-delay:.2s}
+.reveal[data-delay="3"]{transition-delay:.3s}
+.reveal[data-delay="4"]{transition-delay:.4s}
+
+/* Hero entrance — fires on load */
+.hero .reveal-load{
+  opacity:0;transform:translateY(20px);
+  animation:loadUp 1s cubic-bezier(.2,.7,.3,1) forwards;
+}
+.hero .reveal-load[data-delay="1"]{animation-delay:.1s}
+.hero .reveal-load[data-delay="2"]{animation-delay:.25s}
+.hero .reveal-load[data-delay="3"]{animation-delay:.4s}
+.hero .reveal-load[data-delay="4"]{animation-delay:.55s}
+.hero .reveal-load[data-delay="5"]{animation-delay:.7s}
+@keyframes loadUp{to{opacity:1;transform:none}}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.01ms!important;
+    scroll-behavior:auto!important;
+  }
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="nav" id="nav">
+  <div class="container nav__inner">
+    <a href="#topo" class="brand" aria-label="Iara Modas Calçados — início">
+      Iara<em>Modas</em><span class="brand__dot" aria-hidden="true"></span>
+    </a>
+    <div class="nav__links" id="navLinks">
+      <a href="#sobre">Sobre</a>
+      <a href="#categorias">Coleção</a>
+      <a href="#avaliacoes">Clientes</a>
+      <a href="#contato">Visite</a>
+      <a class="nav__cta" href="https://wa.me/551935716098" target="_blank" rel="noopener">
+        WhatsApp
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+    <button class="nav__burger" id="navBurger" aria-label="Abrir menu" aria-expanded="false">
+      <span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="topo">
+  <div class="container hero__inner">
+    <div class="hero__copy">
+      <span class="eyebrow reveal-load">Leme · SP · desde sempre com você</span>
+      <h1 class="reveal-load" data-delay="1">
+        Moda e <em>conforto</em><br/>que te reconhecem
+      </h1>
+      <p class="hero__sub reveal-load" data-delay="2">
+        Calçados e looks para todo estilo — com o atendimento mais
+        acolhedor de Leme. Aqui você não é só mais uma cliente: a gente
+        lembra do seu nome, do seu jeito e do seu número.
+      </p>
+      <div class="hero__ctas reveal-load" data-delay="3">
+        <a class="btn btn--primary" href="https://wa.me/551935716098?text=Ol%C3%A1!%20Quero%20ver%20a%20cole%C3%A7%C3%A3o%20da%20Iara%20Modas." target="_blank" rel="noopener">
+          Ver coleção
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <a class="btn btn--ghost" href="https://wa.me/551935716098" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-1 1.1-.2.2-.4.2-.7.1-.3-.1-1.2-.4-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.4.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.7-1.7-.9-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.3 5.2 4.6.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 3a9 9 0 0 0-7.7 13.6L3 21l4.5-1.2A9 9 0 1 0 12 3z"/></svg>
+          Fale pelo WhatsApp
+        </a>
+      </div>
+      <div class="hero__rating reveal-load" data-delay="4" style="margin-top:36px">
+        <span class="stars" aria-hidden="true">★★★★★</span>
+        <span><strong>4,6 no Google</strong> · 208 avaliações reais</span>
+      </div>
+    </div>
+
+    <div class="hero__visual reveal-load" data-delay="2" aria-hidden="true">
+      <div class="hero__card hero__card--main"></div>
+      <div class="hero__card hero__card--accent"></div>
+      <div class="hero__card hero__card--soft"></div>
+      <div class="hero__badge">
+        <div>
+          <span>tradição</span><br/>
+          Iara<br/>
+          <span>em Leme</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- MARQUEE -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee__track">
+    <span>Tênis</span><span>Sandálias</span><span>Femininos</span><span>Moda</span><span>Acessórios</span><span>Conforto</span><span>Acolhimento</span>
+    <span>Tênis</span><span>Sandálias</span><span>Femininos</span><span>Moda</span><span>Acessórios</span><span>Conforto</span><span>Acolhimento</span>
+  </div>
+</div>
+
+<!-- SOBRE -->
+<section class="sobre" id="sobre">
+  <div class="container">
+    <div class="sobre__grid">
+      <div class="sobre__visual reveal">
+        <div class="sobre__visual-tag">
+          <strong>⭐ 4,6 no Google</strong>
+          208 clientes recomendam
+        </div>
+      </div>
+      <div class="sobre__copy">
+        <span class="eyebrow reveal">A nossa história</span>
+        <h2 class="reveal" data-delay="1">
+          Aqui, você encontra <em style="font-style:italic;font-variation-settings:'opsz' 144;color:var(--c-accent-d)">mais que produtos</em> — encontra gente.
+        </h2>
+        <blockquote class="sobre__pull reveal" data-delay="2">
+          "Ali se encontra mais do que simples produtos. Ali se
+          encontra acolhimento, alegria e bem estar."
+          <cite>— quem já passou pela loja</cite>
+        </blockquote>
+        <p class="reveal" data-delay="2" style="color:var(--c-text-soft);font-size:1.02rem;max-width:520px">
+          A Iara Modas Calçados nasceu da ideia simples de que comprar
+          deveria ser um momento bom — não uma transação fria. Por
+          isso, nossa loja em Leme virou um lugar onde a gente
+          conhece o estilo de cada cliente e lembra de quem entra
+          pela porta.
+        </p>
+        <div class="sobre__diffs reveal" data-delay="3">
+          <div class="sobre__diff">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            <div>
+              <h4>Atendimento humano</h4>
+              <p>A gente escuta antes de vender.</p>
+            </div>
+          </div>
+          <div class="sobre__diff">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg>
+            <div>
+              <h4>Qualidade comprovada</h4>
+              <p>Marcas selecionadas e duráveis.</p>
+            </div>
+          </div>
+          <div class="sobre__diff">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <div>
+              <h4>Coração de Leme</h4>
+              <p>Av. Dom Pedro I, no Jd. Santa Rita.</p>
+            </div>
+          </div>
+          <div class="sobre__diff">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            <div>
+              <h4>Resposta rápida</h4>
+              <p>WhatsApp direto, sem robô.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIAS -->
+<section class="categorias" id="categorias">
+  <div class="container">
+    <div class="section-head section-head--center">
+      <span class="eyebrow reveal">Nossa coleção</span>
+      <h2 class="reveal" data-delay="1">Para cada passo do seu dia</h2>
+      <p class="reveal" data-delay="2">Do tênis pro trabalho ao look para sair — a gente tem combinação pro seu estilo.</p>
+    </div>
+
+    <div class="categorias__grid">
+
+      <a class="cat cat--1 reveal" data-delay="1" href="https://wa.me/551935716098?text=Oi!%20Quero%20ver%20os%20t%C3%AAnis%20da%20Iara%20Modas." target="_blank" rel="noopener">
+        <div class="cat__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 18h20v-2a4 4 0 0 0-4-4l-3-1-2-3-2 1-3-1H5a3 3 0 0 0-3 3v7z"/><path d="M6 14h12"/></svg>
+        </div>
+        <h3 class="cat__name">Tênis</h3>
+        <p class="cat__desc">Pro dia a dia, esporte e estilo casual</p>
+        <div class="cat__arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg></div>
+      </a>
+
+      <a class="cat cat--2 reveal" data-delay="2" href="https://wa.me/551935716098?text=Oi!%20Quero%20ver%20as%20sand%C3%A1lias%20da%20Iara%20Modas." target="_blank" rel="noopener">
+        <div class="cat__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6"/><path d="M9 5l3-3 3 3"/><ellipse cx="12" cy="16" rx="6" ry="4"/><path d="M10 12v2M14 12v2"/></svg>
+        </div>
+        <h3 class="cat__name">Sandálias</h3>
+        <p class="cat__desc">Leveza para todo verão</p>
+        <div class="cat__arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg></div>
+      </a>
+
+      <a class="cat cat--3 reveal" data-delay="3" href="https://wa.me/551935716098?text=Oi!%20Quero%20ver%20os%20cal%C3%A7ados%20femininos%20da%20Iara%20Modas." target="_blank" rel="noopener">
+        <div class="cat__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18c0-3 2-5 5-5h2l3-3 2 8h4"/><path d="M14 10l3-7"/></svg>
+        </div>
+        <h3 class="cat__name">Calçados femininos</h3>
+        <p class="cat__desc">Scarpin, rasteirinha, mule — tem de tudo</p>
+        <div class="cat__arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg></div>
+      </a>
+
+      <a class="cat cat--4 reveal" data-delay="4" href="https://wa.me/551935716098?text=Oi!%20Quero%20ver%20a%20moda%20e%20acess%C3%B3rios%20da%20Iara%20Modas." target="_blank" rel="noopener">
+        <div class="cat__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 5l-4-3-4 2-4-2-4 3v3l3 1v11h10V9l3-1V5z"/></svg>
+        </div>
+        <h3 class="cat__name">Moda <em style="font-style:italic">& acessórios</em></h3>
+        <p class="cat__desc">Roupas, bolsas e detalhes que completam o look</p>
+        <div class="cat__arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg></div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- AVALIAÇÕES -->
+<section class="reviews" id="avaliacoes">
+  <div class="container">
+    <div class="reviews__head">
+      <div>
+        <span class="eyebrow reveal">Clientes de verdade</span>
+        <h2 class="reveal" data-delay="1">Quem passou, voltou.</h2>
+      </div>
+      <div class="reviews__badge reveal" data-delay="2">
+        <span class="reviews__badge-num">4,6</span>
+        <div>
+          <div class="reviews__badge-stars" aria-hidden="true">★★★★★</div>
+          <div class="reviews__badge-meta">208 avaliações</div>
+          <div class="reviews__badge-google">
+            <svg viewBox="0 0 24 24" width="14" height="14"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.99.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84A10.99 10.99 0 0 0 12 23z"/><path fill="#FBBC05" d="M5.84 14.1A6.6 6.6 0 0 1 5.5 12c0-.73.13-1.44.34-2.1V7.06H2.18A11 11 0 0 0 1 12c0 1.78.43 3.46 1.18 4.94l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84C6.71 7.31 9.14 5.38 12 5.38z"/></svg>
+          Google
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reviews__grid">
+      <article class="review reveal" data-delay="1">
+        <div class="review__quote" aria-hidden="true">"</div>
+        <div class="review__stars" aria-hidden="true">★★★★★</div>
+        <p class="review__text">Ótimo atendimento e produtos de ótima qualidade.</p>
+        <div class="review__author">
+          <div class="review__avatar">JM</div>
+          <div>
+            <span class="review__name">Jorge Moraes</span>
+            <span class="review__src">Avaliação Google</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="review reveal" data-delay="2">
+        <div class="review__quote" aria-hidden="true">"</div>
+        <div class="review__stars" aria-hidden="true">★★★★★</div>
+        <p class="review__text">Ali se encontra acolhimento, alegria e bem estar. A recepção e educação de todos que ali trabalham é ímpar, sem concorrente na cidade.</p>
+        <div class="review__author">
+          <div class="review__avatar">SG</div>
+          <div>
+            <span class="review__name">Simone G.</span>
+            <span class="review__src">Avaliação Google</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="review reveal" data-delay="3">
+        <div class="review__quote" aria-hidden="true">"</div>
+        <div class="review__stars" aria-hidden="true">★★★★★</div>
+        <p class="review__text">Fui muito bem atendida. Voltarei com certeza.</p>
+        <div class="review__author">
+          <div class="review__avatar">GF</div>
+          <div>
+            <span class="review__name">Gretchen Fernandes</span>
+            <span class="review__src">Avaliação Google</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- LOCALIZAÇÃO -->
+<section class="local" id="contato">
+  <div class="container">
+    <div class="local__grid">
+      <div class="local__info reveal">
+        <span class="eyebrow">Onde estamos</span>
+        <h2>Passe por aqui.</h2>
+        <p>A gente adora receber você pessoalmente. Mas se o WhatsApp for mais prático, é só chamar.</p>
+
+        <div class="info-row">
+          <div class="info-row__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div>
+            <div class="info-row__label">Endereço</div>
+            <div class="info-row__value">
+              Av. Dom Pedro I, 172<br/>
+              Jardim Santa Rita · Leme · SP<br/>
+              CEP 13611-369
+            </div>
+          </div>
+        </div>
+
+        <div class="info-row">
+          <div class="info-row__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <div>
+            <div class="info-row__label">Telefone & WhatsApp</div>
+            <div class="info-row__value">
+              <a href="tel:+551935716098">(19) 3571-6098</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-row">
+          <div class="info-row__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div>
+            <div class="info-row__label">Horário</div>
+            <div class="info-row__value">
+              Segunda a sábado<br/>
+              Até as 18h
+            </div>
+          </div>
+        </div>
+
+        <a class="btn btn--wa" href="https://wa.me/551935716098" target="_blank" rel="noopener" style="margin-top:32px;align-self:flex-start">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-1 1.1-.2.2-.4.2-.7.1-.3-.1-1.2-.4-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.4.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.7-1.7-.9-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.3 5.2 4.6.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 3a9 9 0 0 0-7.7 13.6L3 21l4.5-1.2A9 9 0 1 0 12 3z"/></svg>
+          Chamar no WhatsApp
+        </a>
+      </div>
+
+      <div class="local__map reveal" data-delay="1">
+        <iframe
+          src="https://www.google.com/maps?q=Av.+Dom+Pedro+I,+172,+Jardim+Santa+Rita,+Leme+-+SP,+13611-369&hl=pt-BR&z=16&output=embed"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Mapa — Iara Modas Calçados, Leme/SP"
+          allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final">
+  <div class="container">
+    <div class="cta-final__inner">
+      <span class="eyebrow reveal" style="color:var(--c-accent)">A gente te espera</span>
+      <h2 class="reveal" data-delay="1">Venha nos visitar <em>em Leme</em></h2>
+      <p class="reveal" data-delay="2">Ou chame no WhatsApp — respondemos rápido, sem robô, com aquele atendimento que você já conhece.</p>
+      <a class="btn btn--wa reveal" data-delay="3" href="https://wa.me/551935716098" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-1 1.1-.2.2-.4.2-.7.1-.3-.1-1.2-.4-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.4.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.7-1.7-.9-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.3 5.2 4.6.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 3a9 9 0 0 0-7.7 13.6L3 21l4.5-1.2A9 9 0 1 0 12 3z"/></svg>
+        Falar no WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__col">
+        <div class="brand footer__brand">Iara<em>Modas</em><span class="brand__dot"></span></div>
+        <p class="footer__tagline">Moda e conforto que te reconhecem. Calçados, looks e atendimento acolhedor em Leme — SP.</p>
+        <div class="footer__social">
+          <a href="https://wa.me/551935716098" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-1 1.1-.2.2-.4.2-.7.1-.3-.1-1.2-.4-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.4.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.7-1.7-.9-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.3 5.2 4.6.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 3a9 9 0 0 0-7.7 13.6L3 21l4.5-1.2A9 9 0 1 0 12 3z"/></svg>
+          </a>
+          <a href="https://www.facebook.com/iaramodasleme" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.6 9.87v-6.98H7.9V12h2.5V9.8c0-2.5 1.49-3.88 3.77-3.88 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.98A10 10 0 0 0 22 12z"/></svg>
+          </a>
+          <a href="tel:+551935716098" aria-label="Telefone">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </a>
+          <a href="https://www.google.com/maps?q=Av.+Dom+Pedro+I,+172,+Jardim+Santa+Rita,+Leme+-+SP" target="_blank" rel="noopener" aria-label="Como chegar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer__col">
+        <h4>Navegue</h4>
+        <ul>
+          <li><a href="#sobre">Sobre</a></li>
+          <li><a href="#categorias">Coleção</a></li>
+          <li><a href="#avaliacoes">Clientes</a></li>
+          <li><a href="#contato">Visite</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <h4>Contato</h4>
+        <ul>
+          <li><a href="tel:+551935716098">(19) 3571-6098</a></li>
+          <li><a href="https://wa.me/551935716098" target="_blank" rel="noopener">WhatsApp direto</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <h4>Visite</h4>
+        <ul>
+          <li>Av. Dom Pedro I, 172</li>
+          <li>Jd. Santa Rita · Leme/SP</li>
+          <li>Seg a sáb · até 18h</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <span>© <span id="year"></span> Iara Modas Calçados · Leme, SP</span>
+      <span>Feito com carinho para quem ama uma boa loja de bairro.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- FLOATING BUTTONS -->
+<a class="fab-wa" href="https://wa.me/551935716098" target="_blank" rel="noopener" aria-label="Fale com a Iara Modas no WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-1 1.1-.2.2-.4.2-.7.1-.3-.1-1.2-.4-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.4.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.7-1.7-.9-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.3 5.2 4.6.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 3a9 9 0 0 0-7.7 13.6L3 21l4.5-1.2A9 9 0 1 0 12 3z"/></svg>
+</a>
+
+<button class="fab-top" id="fabTop" aria-label="Voltar ao topo">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<script>
+(() => {
+  // ===== NAV scroll state =====
+  const nav = document.getElementById('nav');
+  const onScroll = () => {
+    nav.classList.toggle('scrolled', window.scrollY > 24);
+    fabTop.classList.toggle('visible', window.scrollY > 600);
+  };
+  window.addEventListener('scroll', onScroll, { passive:true });
+
+  // ===== NAV burger =====
+  const burger = document.getElementById('navBurger');
+  const navLinks = document.getElementById('navLinks');
+  burger.addEventListener('click', () => {
+    const open = nav.classList.toggle('open');
+    burger.setAttribute('aria-expanded', open);
+  });
+  navLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      nav.classList.remove('open');
+      burger.setAttribute('aria-expanded', false);
+    });
+  });
+
+  // ===== Reveal on scroll =====
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reveals = document.querySelectorAll('.reveal');
+  if (reduceMotion || !('IntersectionObserver' in window)) {
+    reveals.forEach(el => el.classList.add('in'));
+  } else {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+    reveals.forEach(el => io.observe(el));
+  }
+
+  // ===== Footer year =====
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // ===== Back to top =====
+  const fabTop = document.getElementById('fabTop');
+  fabTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+  });
+
+  // Init
+  onScroll();
+})();
+</script>
+
+</body>
+</html>
