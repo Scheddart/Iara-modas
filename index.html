@@ -13,6 +13,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="preconnect" href="https://images.unsplash.com" />
+<script src="https://unpkg.com/three@0.160.0/build/three.min.js" defer></script>
 
 <style>
 /* ============ TOKENS ============ */
@@ -240,13 +242,27 @@ body::before{
     radial-gradient(ellipse 70% 50% at 10% 82%, rgba(30, 58, 95, .10), transparent 60%),
     var(--c-bg);
 }
+.hero__bg-canvas{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  z-index:1;
+  pointer-events:none;
+  opacity:0;
+  transition:opacity 1.2s ease;
+}
+.hero__bg-canvas.is-ready{opacity:.85}
+
 .hero__inner{
   position:relative;
+  z-index:2;
   display:grid;
   grid-template-columns: 1.1fr .9fr;
   gap:clamp(40px, 6vw, 80px);
   align-items:center;
   width:100%;
+  perspective:1200px;
 }
 .hero__copy{position:relative;z-index:2}
 .hero h1{
@@ -312,6 +328,9 @@ body::before{
   aspect-ratio:1/1.05;
   max-width:520px;
   margin-left:auto;
+  transform-style:preserve-3d;
+  transition:transform .6s cubic-bezier(.2,.7,.3,1);
+  will-change:transform;
 }
 .hero__card{
   position:absolute;
@@ -548,6 +567,26 @@ section{position:relative;z-index:2;padding:clamp(80px, 10vw, 140px) 0}
   isolation:isolate;
 }
 .cat:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+/* image layer (zooms on hover) */
+.cat::before{
+  content:"";
+  position:absolute;inset:0;
+  background-position:center;
+  background-size:cover;
+  background-repeat:no-repeat;
+  transition:transform 1s cubic-bezier(.2,.7,.3,1), filter .5s ease;
+  z-index:0;
+  filter:saturate(.95);
+}
+.cat:hover::before{transform:scale(1.08);filter:saturate(1.05)}
+/* gradient overlay on top of image */
+.cat::after{
+  content:"";
+  position:absolute;inset:0;
+  z-index:1;
+  pointer-events:none;
+}
+.cat > *{position:relative;z-index:2}
 .cat__icon{
   position:absolute;
   top:32px;right:32px;
@@ -584,32 +623,65 @@ section{position:relative;z-index:2;padding:clamp(80px, 10vw, 140px) 0}
 .cat:hover .cat__arrow{background:var(--c-primary);transform:translate(-2px,-2px) rotate(-15deg)}
 .cat__arrow svg{width:18px;height:18px}
 
+/* ── TÊNIS ── */
 .cat--1{
   grid-column:span 7;
   background:linear-gradient(135deg, #ECD9B3 0%, #D9A03E 100%);
 }
+.cat--1::before{
+  background-image:url("https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1000&q=80&auto=format&fit=crop");
+}
+.cat--1::after{
+  background:linear-gradient(135deg, rgba(236,217,179,.35) 0%, rgba(217,160,62,.65) 100%);
+}
+
+/* ── SANDÁLIAS ── */
 .cat--2{
   grid-column:span 5;
   background:linear-gradient(135deg, #F2E9D6 0%, #ECD9B3 100%);
 }
+.cat--2::before{
+  background-image:url("https://images.unsplash.com/photo-1603487742131-4160ec999306?w=900&q=80&auto=format&fit=crop");
+}
+.cat--2::after{
+  background:linear-gradient(160deg, rgba(242,233,214,.45) 0%, rgba(236,217,179,.78) 100%);
+}
+
+/* ── CALÇADOS FEMININOS ── */
 .cat--3{
   grid-column:span 5;
   background:linear-gradient(135deg, #1E3A5F 0%, #142845 100%);
   color:var(--c-white);
 }
+.cat--3::before{
+  background-image:url("https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=900&q=80&auto=format&fit=crop");
+  filter:saturate(.85) brightness(.85);
+}
+.cat--3::after{
+  background:linear-gradient(160deg, rgba(30,58,95,.55) 0%, rgba(20,40,69,.88) 100%);
+}
 .cat--3 .cat__name,.cat--3 .cat__desc{color:var(--c-white)}
-.cat--3 .cat__desc{opacity:.85}
-.cat--3 .cat__icon{background:rgba(255,252,247,.18)}
+.cat--3 .cat__desc{opacity:.9}
+.cat--3 .cat__icon{background:rgba(255,252,247,.18);backdrop-filter:blur(8px)}
 .cat--3 .cat__icon svg{color:var(--c-accent)}
 .cat--3 .cat__arrow{background:var(--c-accent);color:var(--c-primary)}
+
+/* ── MODA & ACESSÓRIOS ── */
 .cat--4{
   grid-column:span 7;
   background:linear-gradient(135deg, #C44A3D 0%, #9A3328 100%);
   color:var(--c-white);
 }
+.cat--4::before{
+  background-image:url("https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1000&q=80&auto=format&fit=crop");
+  filter:saturate(.9) brightness(.95);
+}
+.cat--4::after{
+  background:linear-gradient(135deg, rgba(196,74,61,.45) 0%, rgba(154,51,40,.85) 100%);
+}
 .cat--4 .cat__name{color:var(--c-white);font-style:italic;font-variation-settings:"opsz" 144}
-.cat--4 .cat__desc{color:rgba(255,252,247,.78)}
-.cat--4 .cat__icon{background:rgba(255,252,247,.18)}
+.cat--4 .cat__desc{color:rgba(255,252,247,.82)}
+.cat--4 .cat__icon{background:rgba(255,252,247,.18);backdrop-filter:blur(8px)}
 .cat--4 .cat__icon svg{color:var(--c-white)}
 .cat--4 .cat__arrow{background:var(--c-white);color:var(--c-red)}
 
@@ -619,6 +691,143 @@ section{position:relative;z-index:2;padding:clamp(80px, 10vw, 140px) 0}
   .cat__name{font-size:1.5rem}
   .cat__icon{width:52px;height:52px;top:24px;right:24px}
   .cat__icon svg{width:26px;height:26px}
+}
+
+/* ============ EXPERIÊNCIA BANNER ============ */
+.exp-banner-section{
+  background:var(--c-bg);
+  padding:clamp(60px, 8vw, 100px) 0;
+}
+.exp-banner{
+  position:relative;
+  display:grid;
+  grid-template-columns:.95fr 1.05fr;
+  gap:clamp(28px, 4vw, 56px);
+  align-items:stretch;
+  background:var(--c-white);
+  border-radius:var(--r-xl);
+  overflow:hidden;
+  border:1px solid var(--c-line);
+  text-decoration:none;
+  color:inherit;
+  transition:transform var(--t-med), box-shadow var(--t-med);
+  box-shadow:var(--shadow-sm);
+  isolation:isolate;
+}
+.exp-banner:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+
+.exp-banner__media{
+  position:relative;
+  min-height:380px;
+  overflow:hidden;
+  background:linear-gradient(160deg, var(--c-soft), var(--c-accent));
+}
+.exp-banner__media-img{
+  position:absolute;inset:0;
+  background:url("https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1200&q=80&auto=format&fit=crop") center/cover;
+  filter:saturate(.9);
+  transition:transform 1.2s cubic-bezier(.2,.7,.3,1);
+}
+.exp-banner:hover .exp-banner__media-img{transform:scale(1.06)}
+.exp-banner__media::after{
+  content:"";
+  position:absolute;inset:0;
+  background:
+    linear-gradient(180deg, rgba(20,40,69,0) 50%, rgba(20,40,69,.55) 100%),
+    linear-gradient(135deg, rgba(217,160,62,.18) 0%, rgba(30,58,95,.28) 100%);
+}
+.exp-banner__media-tag{
+  position:absolute;
+  left:24px;bottom:24px;
+  z-index:2;
+  background:rgba(255,252,245,.92);
+  backdrop-filter:blur(10px);
+  padding:14px 20px;
+  border-radius:var(--r-md);
+  box-shadow:var(--shadow-md);
+  font-size:.85rem;
+  color:var(--c-text);
+  line-height:1.3;
+}
+.exp-banner__media-tag span{
+  display:block;
+  font-size:.7rem;
+  font-weight:600;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--c-primary);
+  margin-bottom:2px;
+}
+.exp-banner__media-tag strong{
+  display:block;
+  font-family:var(--font-display);
+  font-style:italic;
+  font-weight:500;
+  font-size:1.15rem;
+  color:var(--c-text);
+  font-variation-settings:"opsz" 144, "SOFT" 80;
+}
+
+.exp-banner__copy{
+  padding:clamp(32px, 4.5vw, 56px);
+  display:flex;flex-direction:column;justify-content:center;
+}
+.exp-banner__copy h2{
+  margin:14px 0 18px;
+  font-size:clamp(1.7rem, 2.2vw + .5rem, 2.6rem);
+}
+.exp-banner__copy h2 em{
+  font-style:italic;
+  color:var(--c-red);
+  font-variation-settings:"opsz" 144, "SOFT" 100;
+}
+.exp-banner__copy > p{
+  color:var(--c-text-soft);
+  font-size:1.02rem;
+  margin-bottom:24px;
+  max-width:480px;
+}
+.exp-banner__steps{
+  list-style:none;
+  padding:0;margin:0 0 32px;
+  display:flex;flex-direction:column;gap:10px;
+}
+.exp-banner__steps li{
+  display:flex;align-items:center;gap:14px;
+  font-size:.95rem;
+  color:var(--c-text);
+  padding:10px 0;
+  border-top:1px dashed var(--c-line);
+}
+.exp-banner__steps li:first-child{border-top:0;padding-top:0}
+.exp-banner__steps li span{
+  flex-shrink:0;
+  width:32px;
+  font-family:var(--font-display);
+  font-style:italic;
+  font-size:1.1rem;
+  font-weight:500;
+  color:var(--c-primary);
+  font-variation-settings:"opsz" 144;
+}
+.exp-banner__cta{
+  display:inline-flex;align-items:center;gap:.6em;
+  align-self:flex-start;
+  padding:16px 26px;
+  background:var(--c-primary);
+  color:var(--c-white);
+  border-radius:var(--r-full);
+  font-size:.95rem;font-weight:500;
+  box-shadow:0 8px 20px -6px rgba(30,58,95,.45);
+  transition:background var(--t-fast), transform var(--t-fast);
+}
+.exp-banner:hover .exp-banner__cta{background:var(--c-primary-d);transform:translateY(-1px)}
+.exp-banner__cta svg{width:18px;height:18px;transition:transform var(--t-fast)}
+.exp-banner:hover .exp-banner__cta svg{transform:translateX(4px)}
+
+@media (max-width:860px){
+  .exp-banner{grid-template-columns:1fr}
+  .exp-banner__media{min-height:260px}
 }
 
 /* ============ AVALIAÇÕES ============ */
@@ -947,6 +1156,7 @@ section{position:relative;z-index:2;padding:clamp(80px, 10vw, 140px) 0}
     <div class="nav__links" id="navLinks">
       <a href="#sobre">Sobre</a>
       <a href="#categorias">Coleção</a>
+      <a href="experiencia.html">Experiência</a>
       <a href="#avaliacoes">Clientes</a>
       <a href="#contato">Visite</a>
       <a class="nav__cta" href="https://wa.me/551935716098" target="_blank" rel="noopener">
@@ -962,6 +1172,7 @@ section{position:relative;z-index:2;padding:clamp(80px, 10vw, 140px) 0}
 
 <!-- HERO -->
 <header class="hero" id="topo">
+  <canvas id="heroCanvas" class="hero__bg-canvas" aria-hidden="true"></canvas>
   <div class="container hero__inner">
     <div class="hero__copy">
       <span class="eyebrow reveal-load">Leme · SP · desde sempre com você</span>
@@ -1122,6 +1333,35 @@ section{position:relative;z-index:2;padding:clamp(80px, 10vw, 140px) 0}
       </a>
 
     </div>
+  </div>
+</section>
+
+<!-- EXPERIÊNCIA COMPLETA — banner clicável pra página interna -->
+<section class="exp-banner-section">
+  <div class="container">
+    <a class="exp-banner reveal" href="experiencia.html" aria-label="Ver como funciona uma visita à Iara">
+      <div class="exp-banner__media" aria-hidden="true">
+        <div class="exp-banner__media-img"></div>
+        <div class="exp-banner__media-tag">
+          <span>Como funciona</span>
+          <strong>Sua visita à Iara</strong>
+        </div>
+      </div>
+      <div class="exp-banner__copy">
+        <span class="eyebrow">Experiência completa</span>
+        <h2>Do primeiro <em>oi</em> ao look pronto.</h2>
+        <p>Atendimento personalizado, troca tranquila, e a gente lembra de você na próxima. Veja como é uma visita — passo a passo, sem mistério.</p>
+        <ul class="exp-banner__steps">
+          <li><span>01</span> Chama no WhatsApp ou aparece na loja</li>
+          <li><span>02</span> A gente conhece seu estilo</li>
+          <li><span>03</span> Você experimenta e leva o que amou</li>
+        </ul>
+        <span class="exp-banner__cta">
+          Ver a experiência completa
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </span>
+      </div>
+    </a>
   </div>
 </section>
 
@@ -1389,6 +1629,197 @@ section{position:relative;z-index:2;padding:clamp(80px, 10vw, 140px) 0}
 
   // Init
   onScroll();
+})();
+
+/* ============ HERO 3D SCENE (Three.js) ============ */
+(() => {
+  const canvas = document.getElementById('heroCanvas');
+  if (!canvas) return;
+
+  // Skip 3D on small screens / reduced motion / no WebGL
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isSmall = window.matchMedia('(max-width: 720px)').matches;
+  if (isSmall) { canvas.remove(); return; }
+
+  // Wait for Three.js to load (defer'd in <head>)
+  const init = () => {
+    if (typeof THREE === 'undefined') return;
+
+    const hero = canvas.parentElement;
+    const w = () => hero.clientWidth;
+    const h = () => hero.clientHeight;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(45, w() / h(), 0.1, 100);
+    camera.position.set(0, 0, 12);
+
+    const renderer = new THREE.WebGLRenderer({
+      canvas,
+      alpha: true,
+      antialias: true,
+      powerPreference: 'low-power',
+    });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(w(), h(), false);
+
+    // ── Lights ──
+    scene.add(new THREE.AmbientLight(0xffffff, 0.55));
+    const dir = new THREE.DirectionalLight(0xffffff, 0.7);
+    dir.position.set(5, 6, 5);
+    scene.add(dir);
+    const navLight = new THREE.PointLight(0x1E3A5F, 1.5, 35);
+    navLight.position.set(-6, 4, 4);
+    scene.add(navLight);
+    const goldLight = new THREE.PointLight(0xD9A03E, 1.4, 35);
+    goldLight.position.set(6, -3, 5);
+    scene.add(goldLight);
+    const redLight = new THREE.PointLight(0xC44A3D, 0.8, 25);
+    redLight.position.set(0, -5, 3);
+    scene.add(redLight);
+
+    // ── Shapes ──
+    const palette = [0x1E3A5F, 0xD9A03E, 0xC44A3D, 0xECD9B3, 0xD9A03E];
+    const shapes = [];
+    const N = 10;
+
+    const makeGeo = (i) => {
+      const r = 0.32 + Math.random() * 0.42;
+      if (i % 3 === 0) return new THREE.IcosahedronGeometry(r, 0);
+      if (i % 3 === 1) return new THREE.SphereGeometry(r * 0.95, 48, 48);
+      return new THREE.OctahedronGeometry(r, 0);
+    };
+
+    for (let i = 0; i < N; i++) {
+      const geo = makeGeo(i);
+      const isGlass = i % 2 === 0;
+      const mat = new THREE.MeshPhysicalMaterial({
+        color: palette[i % palette.length],
+        roughness: isGlass ? 0.05 : 0.35,
+        metalness: isGlass ? 0.15 : 0.55,
+        transmission: isGlass ? 0.85 : 0,
+        thickness: isGlass ? 0.9 : 0,
+        clearcoat: 1,
+        clearcoatRoughness: 0.1,
+        ior: 1.4,
+      });
+      const mesh = new THREE.Mesh(geo, mat);
+      // Bias position to the right side (where hero__visual lives) and back
+      const xSpread = 8;
+      const ySpread = 5;
+      mesh.position.set(
+        (Math.random() - 0.35) * xSpread,
+        (Math.random() - 0.5) * ySpread,
+        (Math.random() - 0.5) * 5 - 2
+      );
+      mesh.userData = {
+        base: mesh.position.clone(),
+        rotSpeed: new THREE.Vector3(
+          (Math.random() - 0.5) * 0.0045,
+          (Math.random() - 0.5) * 0.005,
+          (Math.random() - 0.5) * 0.003
+        ),
+        floatOffset: Math.random() * Math.PI * 2,
+        floatSpeed: 0.25 + Math.random() * 0.4,
+        floatAmp: 0.25 + Math.random() * 0.4,
+      };
+      shapes.push(mesh);
+      scene.add(mesh);
+    }
+
+    // ── Mouse parallax (camera + hero cards) ──
+    const mouse = { x: 0, y: 0, tx: 0, ty: 0 };
+    const heroVisual = document.querySelector('.hero__visual');
+    let lastMove = 0;
+    hero.addEventListener('mousemove', (e) => {
+      const now = performance.now();
+      if (now - lastMove < 16) return; // throttle ~60fps
+      lastMove = now;
+      const rect = hero.getBoundingClientRect();
+      mouse.tx = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+      mouse.ty = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+      if (heroVisual) {
+        heroVisual.style.transform =
+          `rotateY(${mouse.tx * 4}deg) rotateX(${-mouse.ty * 3}deg) translateZ(0)`;
+      }
+    });
+    hero.addEventListener('mouseleave', () => {
+      mouse.tx = 0;
+      mouse.ty = 0;
+      if (heroVisual) heroVisual.style.transform = '';
+    });
+
+    // ── Resize ──
+    const onResize = () => {
+      const W = w(), H = h();
+      camera.aspect = W / H;
+      camera.updateProjectionMatrix();
+      renderer.setSize(W, H, false);
+    };
+    window.addEventListener('resize', onResize, { passive: true });
+
+    // ── Render loop ──
+    const clock = new THREE.Clock();
+    let rafId = null;
+    let visible = true;
+
+    // Pause when hero not in view (perf)
+    const heroIO = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      if (visible && !reduceMotion && !rafId) animate();
+    }, { threshold: 0.05 });
+    heroIO.observe(hero);
+
+    function animate() {
+      if (!visible) { rafId = null; return; }
+      rafId = requestAnimationFrame(animate);
+      const t = clock.getElapsedTime();
+
+      // Smooth camera follow
+      mouse.x += (mouse.tx - mouse.x) * 0.05;
+      mouse.y += (mouse.ty - mouse.y) * 0.05;
+      camera.position.x = mouse.x * 0.6;
+      camera.position.y = -mouse.y * 0.4;
+      camera.lookAt(0, 0, 0);
+
+      // Animate shapes
+      for (let i = 0; i < shapes.length; i++) {
+        const s = shapes[i];
+        const d = s.userData;
+        s.rotation.x += d.rotSpeed.x;
+        s.rotation.y += d.rotSpeed.y;
+        s.rotation.z += d.rotSpeed.z;
+        s.position.y = d.base.y + Math.sin(t * d.floatSpeed + d.floatOffset) * d.floatAmp;
+        s.position.x = d.base.x + Math.cos(t * d.floatSpeed * 0.7 + d.floatOffset) * (d.floatAmp * 0.6);
+      }
+
+      renderer.render(scene, camera);
+    }
+
+    // First render + fade in
+    renderer.render(scene, camera);
+    requestAnimationFrame(() => canvas.classList.add('is-ready'));
+
+    if (!reduceMotion) animate();
+  };
+
+  // Three.js loads with defer, so DOM is ready when this script runs.
+  // But the THREE global might not be defined yet — poll briefly.
+  if (typeof THREE !== 'undefined') {
+    init();
+  } else {
+    let tries = 0;
+    const poll = setInterval(() => {
+      tries++;
+      if (typeof THREE !== 'undefined') {
+        clearInterval(poll);
+        init();
+      } else if (tries > 50) {
+        clearInterval(poll);
+        // Three.js failed to load — gracefully remove the canvas
+        canvas.remove();
+      }
+    }, 60);
+  }
 })();
 </script>
 

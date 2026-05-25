@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#1E3A5F" />
+<title>Como funciona uma visita à Iara · Iara Modas Calçados · Leme/SP</title>
+<meta name="description" content="Como é a experiência de compra na Iara Modas Calçados — do primeiro WhatsApp ao look pronto. Atendimento humano em Leme/SP." />
+<meta property="og:title" content="A experiência Iara — do primeiro oi ao look pronto" />
+<meta property="og:description" content="Como funciona uma visita à Iara Modas em Leme/SP." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preconnect" href="https://images.unsplash.com" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+<style>
+/* ============ TOKENS (sync with index.html) ============ */
+:root{
+  --c-primary:   #1E3A5F;
+  --c-primary-d: #142845;
+  --c-bg:        #FAF5EB;
+  --c-bg-2:      #F2E9D6;
+  --c-text:      #142845;
+  --c-text-soft: #5A6A82;
+  --c-accent:    #D9A03E;
+  --c-accent-d:  #B58329;
+  --c-red:       #C44A3D;
+  --c-soft:      #ECD9B3;
+  --c-line:      #E3D4B5;
+  --c-white:     #FFFCF5;
+
+  --shadow-sm: 0 2px 8px rgba(20, 40, 69, .06);
+  --shadow-md: 0 12px 32px -8px rgba(20, 40, 69, .14);
+  --shadow-lg: 0 24px 60px -12px rgba(20, 40, 69, .22);
+
+  --r-sm: 8px;
+  --r-md: 14px;
+  --r-lg: 22px;
+  --r-xl: 32px;
+  --r-full: 999px;
+
+  --font-display: "Fraunces", "Times New Roman", serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --container: 1200px;
+  --gutter: clamp(20px, 4vw, 56px);
+
+  --t-fast: .25s cubic-bezier(.2,.7,.3,1);
+  --t-med: .5s cubic-bezier(.2,.7,.3,1);
+}
+
+/* ============ BASE ============ */
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  font-family:var(--font-body);
+  font-size:16px;
+  line-height:1.6;
+  color:var(--c-text);
+  background:var(--c-bg);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  overflow-x:hidden;
+}
+img,svg{display:block;max-width:100%;height:auto}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;border:0;background:transparent;color:inherit}
+
+h1,h2,h3,h4{
+  font-family:var(--font-display);
+  font-weight:500;
+  letter-spacing:-.015em;
+  line-height:1.1;
+  margin:0;
+  color:var(--c-text);
+  font-variation-settings:"opsz" 80, "SOFT" 50;
+}
+h1{font-size:clamp(2.2rem, 5vw + .5rem, 4.6rem)}
+h2{font-size:clamp(1.7rem, 2.8vw + .5rem, 3rem)}
+h3{font-size:clamp(1.15rem, 1vw + .8rem, 1.45rem)}
+p{margin:0 0 1em}
+
+body::before{
+  content:"";
+  position:fixed;inset:0;
+  pointer-events:none;
+  z-index:1;
+  background-image:radial-gradient(circle at 1px 1px, rgba(20,40,69,.035) 1px, transparent 0);
+  background-size:3px 3px;
+  mix-blend-mode:multiply;
+  opacity:.5;
+}
+
+.container{
+  width:100%;
+  max-width:var(--container);
+  margin:0 auto;
+  padding:0 var(--gutter);
+  position:relative;
+}
+
+.eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:.6em;
+  font-family:var(--font-body);
+  font-size:.78rem;
+  font-weight:500;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--c-primary);
+}
+.eyebrow::before{
+  content:"";
+  width:24px;height:1px;
+  background:currentColor;
+}
+
+/* ============ NAVBAR ============ */
+.nav{
+  position:fixed;top:0;left:0;right:0;
+  z-index:100;
+  padding:18px 0;
+  transition:padding var(--t-med), background var(--t-med), backdrop-filter var(--t-med), box-shadow var(--t-med);
+}
+.nav.scrolled{
+  padding:10px 0;
+  background:rgba(250, 245, 235, .72);
+  backdrop-filter:saturate(180%) blur(16px);
+  -webkit-backdrop-filter:saturate(180%) blur(16px);
+  box-shadow:0 1px 0 rgba(20,40,69,.06), 0 8px 32px -16px rgba(20,40,69,.18);
+}
+.nav__inner{display:flex;align-items:center;justify-content:space-between;gap:24px}
+.brand{
+  display:flex;align-items:baseline;gap:.4em;
+  font-family:var(--font-display);
+  font-size:1.45rem;
+  font-weight:600;
+  letter-spacing:-.01em;
+  color:var(--c-text);
+}
+.brand em{
+  font-style:italic;
+  font-weight:500;
+  color:var(--c-red);
+  font-variation-settings:"opsz" 144, "SOFT" 100;
+}
+.brand__dot{
+  display:inline-block;width:6px;height:6px;border-radius:50%;
+  background:var(--c-accent);transform:translateY(-3px);
+}
+.nav__links{display:flex;gap:36px;align-items:center;font-size:.92rem;font-weight:500}
+.nav__links a{
+  position:relative;color:var(--c-text);opacity:.85;
+  transition:opacity var(--t-fast);
+}
+.nav__links a::after{
+  content:"";position:absolute;left:0;bottom:-6px;
+  width:0;height:1.5px;background:var(--c-primary);
+  transition:width var(--t-med);
+}
+.nav__links a:hover,.nav__links a.is-active{opacity:1}
+.nav__links a:hover::after{width:100%}
+.nav__links a.is-active::after{width:100%;background:var(--c-accent)}
+
+.nav__cta{
+  display:inline-flex;align-items:center;gap:.5em;
+  padding:10px 18px;
+  background:var(--c-text);color:var(--c-bg);
+  border-radius:var(--r-full);
+  font-size:.88rem;font-weight:500;
+  transition:transform var(--t-fast), background var(--t-fast);
+}
+.nav__cta:hover{background:var(--c-primary);transform:translateY(-1px)}
+.nav__cta svg{width:16px;height:16px}
+
+.nav__burger{
+  display:none;
+  width:42px;height:42px;
+  align-items:center;justify-content:center;
+  border-radius:var(--r-full);
+}
+.nav__burger span{
+  display:block;width:22px;height:1.5px;background:var(--c-text);
+  position:relative;
+  transition:transform var(--t-fast), background var(--t-fast);
+}
+.nav__burger span::before,.nav__burger span::after{
+  content:"";position:absolute;left:0;width:22px;height:1.5px;background:var(--c-text);
+  transition:transform var(--t-fast), top var(--t-fast);
+}
+.nav__burger span::before{top:-7px}
+.nav__burger span::after{top:7px}
+.nav.open .nav__burger span{background:transparent}
+.nav.open .nav__burger span::before{top:0;transform:rotate(45deg)}
+.nav.open .nav__burger span::after{top:0;transform:rotate(-45deg)}
+
+@media (max-width: 860px){
+  .nav__links{
+    position:fixed;inset:0 0 0 auto;width:min(86vw, 360px);
+    background:var(--c-bg);
+    padding:96px 36px 36px;
+    flex-direction:column;align-items:flex-start;gap:20px;
+    transform:translateX(105%);
+    transition:transform var(--t-med);
+    box-shadow:var(--shadow-lg);
+    border-left:1px solid var(--c-line);
+  }
+  .nav.open .nav__links{transform:translateX(0)}
+  .nav__links a{font-size:1.4rem;font-family:var(--font-display);font-weight:400}
+  .nav__cta{font-size:1rem;padding:14px 22px;margin-top:8px}
+  .nav__burger{display:flex;z-index:2}
+}
+
+/* ============ PAGE HERO ============ */
+.page-hero{
+  position:relative;
+  padding:150px 0 80px;
+  background:
+    radial-gradient(ellipse 70% 50% at 80% 25%, rgba(217,160,62,.32), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 15% 80%, rgba(196,74,61,.14), transparent 60%),
+    var(--c-bg);
+  overflow:hidden;
+}
+.page-hero__inner{
+  display:grid;
+  grid-template-columns:1.05fr .95fr;
+  gap:clamp(36px, 5vw, 72px);
+  align-items:center;
+}
+.page-hero h1{margin:18px 0 22px}
+.page-hero h1 em{
+  font-style:italic;color:var(--c-red);
+  font-variation-settings:"opsz" 144, "SOFT" 100;
+}
+.page-hero__sub{
+  font-size:clamp(1.02rem, .4vw + 1rem, 1.2rem);
+  color:var(--c-text-soft);
+  max-width:520px;
+  margin-bottom:32px;
+}
+.page-hero__ctas{display:flex;flex-wrap:wrap;gap:14px}
+.page-hero__visual{
+  position:relative;
+  aspect-ratio:4/5;
+  border-radius:var(--r-xl);
+  overflow:hidden;
+  box-shadow:var(--shadow-lg);
+  background:
+    linear-gradient(180deg, rgba(20,40,69,0) 50%, rgba(20,40,69,.45) 100%),
+    linear-gradient(135deg, rgba(217,160,62,.15), rgba(30,58,95,.25)),
+    url("https://images.unsplash.com/photo-1483985988355-763728e1935b?w=900&q=80&auto=format&fit=crop") center/cover;
+}
+.page-hero__visual-tag{
+  position:absolute;
+  left:24px;bottom:24px;
+  background:rgba(255,252,245,.92);
+  backdrop-filter:blur(10px);
+  padding:14px 20px;
+  border-radius:var(--r-md);
+  box-shadow:var(--shadow-md);
+  font-size:.85rem;
+}
+.page-hero__visual-tag strong{
+  display:block;font-family:var(--font-display);font-style:italic;
+  font-size:1.15rem;color:var(--c-primary);
+  font-variation-settings:"opsz" 144;
+}
+
+@media (max-width:860px){
+  .page-hero__inner{grid-template-columns:1fr}
+  .page-hero__visual{max-width:420px;margin:0 auto;aspect-ratio:1/1}
+  .page-hero{padding:130px 0 60px}
+}
+
+/* ============ BUTTONS ============ */
+.btn{
+  display:inline-flex;align-items:center;gap:.6em;
+  padding:16px 28px;
+  border-radius:var(--r-full);
+  font-size:.98rem;font-weight:500;
+  transition:transform var(--t-fast), background var(--t-fast), color var(--t-fast), box-shadow var(--t-fast);
+  white-space:nowrap;
+}
+.btn svg{width:18px;height:18px;transition:transform var(--t-fast)}
+.btn:hover svg{transform:translateX(3px)}
+.btn--primary{
+  background:var(--c-primary);color:var(--c-white);
+  box-shadow:0 8px 20px -6px rgba(30,58,95,.45);
+}
+.btn--primary:hover{background:var(--c-primary-d);transform:translateY(-2px)}
+.btn--ghost{
+  background:transparent;color:var(--c-text);
+  border:1.5px solid var(--c-text);
+}
+.btn--ghost:hover{background:var(--c-text);color:var(--c-bg)}
+.btn--wa{
+  background:#25D366;color:#fff;
+  box-shadow:0 8px 20px -6px rgba(37,211,102,.5);
+}
+.btn--wa:hover{background:#1ebd5b;transform:translateY(-2px)}
+
+/* ============ SECTIONS ============ */
+section{position:relative;z-index:2;padding:clamp(70px, 9vw, 120px) 0}
+
+.section-head{max-width:760px;margin-bottom:56px}
+.section-head--center{margin-left:auto;margin-right:auto;text-align:center}
+.section-head--center .eyebrow{justify-content:center}
+.section-head h2{margin-top:14px}
+.section-head p{margin-top:18px;color:var(--c-text-soft);font-size:1.05rem;max-width:560px}
+.section-head--center p{margin-left:auto;margin-right:auto}
+
+/* ============ JOURNEY (timeline) ============ */
+.journey{background:var(--c-bg)}
+.journey__list{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:20px;
+  counter-reset:step;
+  position:relative;
+}
+.journey__step{
+  display:grid;
+  grid-template-columns:auto 1fr;
+  gap:clamp(24px, 4vw, 48px);
+  align-items:flex-start;
+  padding:clamp(28px, 4vw, 44px);
+  background:var(--c-white);
+  border:1px solid var(--c-line);
+  border-radius:var(--r-lg);
+  transition:transform var(--t-med), box-shadow var(--t-med), border-color var(--t-med);
+  position:relative;
+  overflow:hidden;
+}
+.journey__step:hover{
+  transform:translateY(-4px);
+  box-shadow:var(--shadow-md);
+  border-color:var(--c-accent);
+}
+.journey__step::after{
+  content:"";
+  position:absolute;
+  inset:auto -40% -40% auto;
+  width:60%;height:60%;
+  background:radial-gradient(circle, rgba(217,160,62,.12), transparent 70%);
+  opacity:0;transition:opacity var(--t-med);
+  pointer-events:none;
+}
+.journey__step:hover::after{opacity:1}
+.journey__num{
+  font-family:var(--font-display);
+  font-style:italic;
+  font-size:clamp(3rem, 5vw, 5rem);
+  font-weight:500;
+  color:var(--c-primary);
+  line-height:.9;
+  font-variation-settings:"opsz" 144, "SOFT" 100;
+  min-width:80px;
+}
+.journey__body h3{margin-bottom:8px;color:var(--c-text)}
+.journey__body p{margin:0;color:var(--c-text-soft);font-size:1rem;max-width:560px}
+.journey__icon{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:48px;height:48px;border-radius:14px;
+  background:var(--c-soft);color:var(--c-primary);
+  margin-bottom:14px;
+}
+.journey__icon svg{width:24px;height:24px}
+
+/* alternating accent on even rows */
+.journey__step:nth-child(even) .journey__num{color:var(--c-red)}
+.journey__step:nth-child(even) .journey__icon{background:#F8DBD5;color:var(--c-red)}
+.journey__step:nth-child(3n) .journey__num{color:var(--c-accent-d)}
+.journey__step:nth-child(3n) .journey__icon{background:#F4E6CC;color:var(--c-accent-d)}
+
+@media (min-width:860px){
+  .journey__step{grid-template-columns:auto 1fr auto}
+}
+
+/* ============ PAYMENT ============ */
+.payment{background:var(--c-bg-2)}
+.payment__grid{
+  display:grid;
+  grid-template-columns:repeat(4, 1fr);
+  gap:18px;
+}
+.pay-card{
+  padding:28px 24px;
+  background:var(--c-white);
+  border-radius:var(--r-lg);
+  border:1px solid var(--c-line);
+  text-align:left;
+  transition:transform var(--t-med), box-shadow var(--t-med);
+}
+.pay-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md)}
+.pay-card__icon{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:44px;height:44px;border-radius:12px;
+  background:var(--c-soft);color:var(--c-primary);
+  margin-bottom:18px;
+}
+.pay-card__icon svg{width:22px;height:22px}
+.pay-card h3{
+  font-family:var(--font-body);
+  font-size:1.05rem;
+  font-weight:600;
+  margin:0 0 6px;
+  color:var(--c-text);
+}
+.pay-card p{
+  margin:0;font-size:.88rem;color:var(--c-text-soft);line-height:1.5;
+}
+.pay-card--accent{background:var(--c-primary);color:var(--c-white)}
+.pay-card--accent h3{color:var(--c-white)}
+.pay-card--accent p{color:rgba(255,252,245,.82)}
+.pay-card--accent .pay-card__icon{background:rgba(255,252,245,.16);color:var(--c-accent)}
+
+@media (max-width:860px){
+  .payment__grid{grid-template-columns:1fr 1fr;gap:14px}
+  .pay-card{padding:22px 20px}
+}
+@media (max-width:480px){
+  .payment__grid{grid-template-columns:1fr}
+}
+
+/* ============ EXCHANGE (editorial block) ============ */
+.exchange{background:var(--c-bg)}
+.exchange__inner{
+  display:grid;
+  grid-template-columns:1fr 1.2fr;
+  gap:clamp(32px, 5vw, 64px);
+  align-items:center;
+}
+.exchange__visual{
+  position:relative;
+  aspect-ratio:1/1;
+  border-radius:var(--r-xl);
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 30% 25%, rgba(217,160,62,.35), transparent 60%),
+    linear-gradient(160deg, var(--c-soft), var(--c-accent));
+  box-shadow:var(--shadow-md);
+}
+.exchange__visual::before{
+  content:"";position:absolute;inset:22px;
+  border:1px solid rgba(255,252,245,.45);
+  border-radius:calc(var(--r-xl) - 6px);
+  pointer-events:none;
+}
+.exchange__visual::after{
+  content:"7";
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);
+  font-style:italic;
+  font-size:clamp(8rem, 18vw, 14rem);
+  font-weight:500;
+  color:var(--c-white);
+  line-height:1;
+  font-variation-settings:"opsz" 144, "SOFT" 100;
+  opacity:.6;
+}
+.exchange__caption{
+  position:absolute;
+  bottom:24px;left:24px;right:24px;
+  text-align:center;
+  font-family:var(--font-display);
+  font-style:italic;
+  font-size:1rem;
+  color:var(--c-text);
+}
+.exchange__pull{
+  font-family:var(--font-display);
+  font-style:italic;
+  font-size:clamp(1.4rem, 1.4vw + 1.1rem, 2rem);
+  line-height:1.35;
+  color:var(--c-text);
+  border-left:2px solid var(--c-primary);
+  padding-left:24px;
+  margin:0 0 24px;
+  font-variation-settings:"opsz" 144, "SOFT" 100;
+}
+.exchange__copy h2{margin-bottom:16px}
+.exchange__copy > p{color:var(--c-text-soft);font-size:1.02rem;max-width:520px}
+
+@media (max-width:860px){
+  .exchange__inner{grid-template-columns:1fr}
+  .exchange__visual{max-width:380px;margin:0 auto}
+}
+
+/* ============ FAQ ============ */
+.faq{background:var(--c-bg-2)}
+.faq__list{
+  max-width:840px;margin:0 auto;
+  display:flex;flex-direction:column;gap:14px;
+}
+.faq__item{
+  background:var(--c-white);
+  border:1px solid var(--c-line);
+  border-radius:var(--r-lg);
+  overflow:hidden;
+  transition:border-color var(--t-fast), box-shadow var(--t-fast);
+}
+.faq__item[open]{
+  border-color:var(--c-accent);
+  box-shadow:var(--shadow-sm);
+}
+.faq__summary{
+  list-style:none;
+  cursor:pointer;
+  padding:22px 28px;
+  display:flex;align-items:center;justify-content:space-between;gap:18px;
+  font-family:var(--font-display);
+  font-weight:500;
+  font-size:clamp(1.05rem, .3vw + 1rem, 1.18rem);
+  color:var(--c-text);
+  line-height:1.3;
+  font-variation-settings:"opsz" 144;
+}
+.faq__summary::-webkit-details-marker{display:none}
+.faq__plus{
+  flex-shrink:0;
+  width:32px;height:32px;
+  display:inline-flex;align-items:center;justify-content:center;
+  border-radius:50%;
+  background:var(--c-soft);
+  color:var(--c-primary);
+  transition:transform var(--t-fast), background var(--t-fast);
+  font-size:1.3rem;line-height:1;
+}
+.faq__item[open] .faq__plus{
+  transform:rotate(45deg);
+  background:var(--c-accent);
+  color:var(--c-white);
+}
+.faq__body{
+  padding:0 28px 22px;
+  color:var(--c-text-soft);
+  font-size:.98rem;
+  line-height:1.6;
+  animation:faqIn .4s ease;
+}
+@keyframes faqIn{
+  from{opacity:0;transform:translateY(-6px)}
+  to{opacity:1;transform:none}
+}
+
+/* ============ CTA FINAL ============ */
+.cta-final{
+  background:var(--c-text);
+  color:var(--c-bg);
+  position:relative;
+  overflow:hidden;
+}
+.cta-final::before{
+  content:"";
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 60% 40% at 80% 30%, rgba(196,74,61,.32), transparent 60%),
+    radial-gradient(ellipse 50% 40% at 20% 80%, rgba(217,160,62,.32), transparent 60%);
+  pointer-events:none;
+}
+.cta-final__inner{position:relative;text-align:center;max-width:760px;margin:0 auto}
+.cta-final h2{color:var(--c-bg);margin-bottom:20px}
+.cta-final h2 em{font-style:italic;color:var(--c-accent);font-variation-settings:"opsz" 144}
+.cta-final p{font-size:1.1rem;color:rgba(250,245,235,.78);margin-bottom:36px}
+
+/* ============ FOOTER ============ */
+.footer{
+  background:var(--c-bg);
+  padding:64px 0 32px;
+  border-top:1px solid var(--c-line);
+}
+.footer__grid{
+  display:grid;
+  grid-template-columns:1.4fr 1fr 1fr 1fr;
+  gap:48px;
+  margin-bottom:48px;
+}
+.footer__brand{font-size:1.8rem;margin-bottom:14px}
+.footer__brand em{font-style:italic;color:var(--c-red)}
+.footer__tagline{color:var(--c-text-soft);font-size:.95rem;max-width:280px;line-height:1.55}
+.footer__col h4{
+  font-family:var(--font-body);font-size:.75rem;font-weight:600;
+  letter-spacing:.18em;text-transform:uppercase;
+  color:var(--c-primary);margin-bottom:18px;
+}
+.footer__col ul{list-style:none;padding:0;margin:0}
+.footer__col li{margin-bottom:10px;font-size:.92rem;color:var(--c-text-soft);line-height:1.5}
+.footer__col a{color:var(--c-text-soft);transition:color var(--t-fast)}
+.footer__col a:hover{color:var(--c-primary)}
+.footer__social{display:flex;gap:10px;margin-top:18px}
+.footer__social a{
+  width:38px;height:38px;border-radius:50%;
+  background:var(--c-white);border:1px solid var(--c-line);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--c-text);
+  transition:background var(--t-fast), color var(--t-fast), transform var(--t-fast);
+}
+.footer__social a:hover{background:var(--c-primary);color:var(--c-white);border-color:var(--c-primary);transform:translateY(-2px)}
+.footer__social svg{width:18px;height:18px}
+.footer__bottom{
+  display:flex;justify-content:space-between;align-items:center;
+  padding-top:24px;border-top:1px solid var(--c-line);
+  font-size:.82rem;color:var(--c-text-soft);
+  flex-wrap:wrap;gap:12px;
+}
+@media (max-width:860px){
+  .footer__grid{grid-template-columns:1fr 1fr;gap:36px 24px}
+  .footer__col:first-child{grid-column:1/-1}
+  .footer__bottom{flex-direction:column;text-align:center}
+}
+
+/* ============ FAB ============ */
+.fab-wa{
+  position:fixed;
+  bottom:24px;right:24px;
+  width:58px;height:58px;
+  background:#25D366;color:#fff;
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  z-index:90;
+  box-shadow:0 10px 28px -6px rgba(37,211,102,.55), 0 4px 12px rgba(37,211,102,.3);
+  transition:transform var(--t-fast);
+}
+.fab-wa::before{
+  content:"";position:absolute;inset:0;border-radius:50%;
+  background:#25D366;opacity:.4;
+  animation:pulse 2.2s ease-out infinite;
+  z-index:-1;
+}
+@keyframes pulse{
+  0%{transform:scale(1);opacity:.5}
+  100%{transform:scale(1.7);opacity:0}
+}
+.fab-wa:hover{transform:scale(1.08)}
+.fab-wa svg{width:30px;height:30px}
+
+.fab-top{
+  position:fixed;
+  bottom:24px;right:94px;
+  width:46px;height:46px;
+  background:var(--c-text);color:var(--c-bg);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  z-index:89;
+  opacity:0;visibility:hidden;transform:translateY(8px);
+  transition:opacity var(--t-fast), transform var(--t-fast), visibility var(--t-fast), background var(--t-fast);
+  box-shadow:var(--shadow-md);
+}
+.fab-top.visible{opacity:1;visibility:visible;transform:translateY(0)}
+.fab-top:hover{background:var(--c-primary)}
+.fab-top svg{width:18px;height:18px}
+
+@media (max-width:560px){
+  .fab-wa{width:54px;height:54px;bottom:18px;right:18px}
+  .fab-top{width:42px;height:42px;bottom:18px;right:80px}
+}
+
+/* ============ REVEAL ============ */
+.reveal{
+  opacity:0;transform:translateY(28px);
+  transition:opacity .9s cubic-bezier(.2,.7,.3,1), transform .9s cubic-bezier(.2,.7,.3,1);
+  will-change:opacity, transform;
+}
+.reveal.in{opacity:1;transform:none}
+.reveal[data-delay="1"]{transition-delay:.08s}
+.reveal[data-delay="2"]{transition-delay:.16s}
+.reveal[data-delay="3"]{transition-delay:.24s}
+.reveal[data-delay="4"]{transition-delay:.32s}
+.reveal[data-delay="5"]{transition-delay:.4s}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.01ms!important;
+    scroll-behavior:auto!important;
+  }
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="nav" id="nav">
+  <div class="container nav__inner">
+    <a href="index.html" class="brand" aria-label="Voltar para o início">
+      Iara<em>Modas</em><span class="brand__dot" aria-hidden="true"></span>
+    </a>
+    <div class="nav__links" id="navLinks">
+      <a href="index.html#sobre">Sobre</a>
+      <a href="index.html#categorias">Coleção</a>
+      <a href="experiencia.html" class="is-active">Experiência</a>
+      <a href="index.html#avaliacoes">Clientes</a>
+      <a href="index.html#contato">Visite</a>
+      <a class="nav__cta" href="https://wa.me/551935716098" target="_blank" rel="noopener">
+        WhatsApp
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+    <button class="nav__burger" id="navBurger" aria-label="Abrir menu" aria-expanded="false">
+      <span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="page-hero">
+  <div class="container page-hero__inner">
+    <div class="page-hero__copy">
+      <span class="eyebrow reveal">Como funciona</span>
+      <h1 class="reveal" data-delay="1">Sua visita à Iara, do primeiro <em>oi</em> ao look pronto.</h1>
+      <p class="page-hero__sub reveal" data-delay="2">
+        Sem mistério, sem formulário, sem robô. A gente atende como gente.
+        Aqui está como é uma compra — passo a passo, na velocidade que você quiser.
+      </p>
+      <div class="page-hero__ctas reveal" data-delay="3">
+        <a class="btn btn--primary" href="https://wa.me/551935716098?text=Ol%C3%A1!%20Quero%20marcar%20uma%20visita%20%C3%A0%20Iara." target="_blank" rel="noopener">
+          Chamar no WhatsApp
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <a class="btn btn--ghost" href="https://www.google.com/maps?q=Av.+Dom+Pedro+I,+172,+Jardim+Santa+Rita,+Leme+-+SP" target="_blank" rel="noopener">
+          Como chegar
+        </a>
+      </div>
+    </div>
+    <div class="page-hero__visual reveal" data-delay="2" aria-hidden="true">
+      <div class="page-hero__visual-tag">
+        <strong>Av. Dom Pedro I, 172</strong>
+        Jd. Santa Rita · Leme · SP
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- JOURNEY (5 passos) -->
+<section class="journey">
+  <div class="container">
+    <div class="section-head section-head--center">
+      <span class="eyebrow reveal">A jornada</span>
+      <h2 class="reveal" data-delay="1">Cinco passos. Zero pressão.</h2>
+      <p class="reveal" data-delay="2">A gente atende no tempo que você precisar. Sem fila, sem script.</p>
+    </div>
+
+    <ol class="journey__list">
+      <li class="journey__step reveal" data-delay="1">
+        <span class="journey__num">01</span>
+        <div class="journey__body">
+          <span class="journey__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          </span>
+          <h3>Chama no WhatsApp ou aparece na loja</h3>
+          <p>Manda mensagem, manda um áudio, ou só passa por aqui. A gente está aberta de segunda a sábado, até as 18h. Sem agendamento.</p>
+        </div>
+      </li>
+
+      <li class="journey__step reveal" data-delay="2">
+        <span class="journey__num">02</span>
+        <div class="journey__body">
+          <span class="journey__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </span>
+          <h3>A gente conhece o seu estilo</h3>
+          <p>Pergunta o que você procura — sapato pro trabalho, sandália de festa, look pra um evento — e qual seu tamanho e cor preferida.</p>
+        </div>
+      </li>
+
+      <li class="journey__step reveal" data-delay="3">
+        <span class="journey__num">03</span>
+        <div class="journey__body">
+          <span class="journey__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+          </span>
+          <h3>Separamos peças pensando em você</h3>
+          <p>Trazemos opções que combinam com o seu jeito. Se quiser, faz um café e fica à vontade — leva tempo escolher o que se ama.</p>
+        </div>
+      </li>
+
+      <li class="journey__step reveal" data-delay="4">
+        <span class="journey__num">04</span>
+        <div class="journey__body">
+          <span class="journey__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2" fill="currentColor"/></svg>
+          </span>
+          <h3>Você experimenta na hora</h3>
+          <p>Sapato é coisa de sentir no pé. Espelho, opinião de quem trabalha aqui, segunda opinião — tudo aqui. Sem pressa.</p>
+        </div>
+      </li>
+
+      <li class="journey__step reveal" data-delay="5">
+        <span class="journey__num">05</span>
+        <div class="journey__body">
+          <span class="journey__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+          <h3>Levou o que amou</h3>
+          <p>Combinamos pagamento e embalagem. Pode levar na hora — ou a gente embrulha pra presente e você vem buscar depois.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- PAYMENT -->
+<section class="payment">
+  <div class="container">
+    <div class="section-head section-head--center">
+      <span class="eyebrow reveal">Formas de pagamento</span>
+      <h2 class="reveal" data-delay="1">Do jeito que for melhor pra você.</h2>
+    </div>
+
+    <div class="payment__grid">
+      <div class="pay-card reveal" data-delay="1">
+        <span class="pay-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 12l10 10 10-10-10-10z"/></svg>
+        </span>
+        <h3>Pix</h3>
+        <p>À vista, na hora. Confirmação instantânea.</p>
+      </div>
+
+      <div class="pay-card pay-card--accent reveal" data-delay="2">
+        <span class="pay-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        </span>
+        <h3>Cartão</h3>
+        <p>Crédito ou débito. Parcelamos sem juros — conversa com a gente.</p>
+      </div>
+
+      <div class="pay-card reveal" data-delay="3">
+        <span class="pay-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </span>
+        <h3>Dinheiro</h3>
+        <p>Pra quem prefere o tradicional — e quase sempre rola um desconto.</p>
+      </div>
+
+      <div class="pay-card reveal" data-delay="4">
+        <span class="pay-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </span>
+        <h3>Crediário próprio</h3>
+        <p>Pra cliente conhecido da casa. A gente combina o quanto cabe no seu mês.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXCHANGE -->
+<section class="exchange">
+  <div class="container">
+    <div class="exchange__inner">
+      <div class="exchange__visual reveal" aria-hidden="true">
+        <div class="exchange__caption">dias para trocar tranquila</div>
+      </div>
+      <div class="exchange__copy">
+        <span class="eyebrow reveal">Trocas &amp; ajustes</span>
+        <h2 class="reveal" data-delay="1">Se não ficou como esperava, a gente resolve.</h2>
+        <blockquote class="exchange__pull reveal" data-delay="2">
+          "Trazendo a nota e o produto sem uso, troca tranquila em até 7 dias. Sem dramas, sem letra miúda."
+        </blockquote>
+        <p class="reveal" data-delay="3">
+          Mudou de ideia? Apertou no pé? Não combinou com aquele vestido?
+          É só passar aqui ou chamar no WhatsApp — a gente arranja uma solução boa pra você.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="container">
+    <div class="section-head section-head--center">
+      <span class="eyebrow reveal">Perguntas rápidas</span>
+      <h2 class="reveal" data-delay="1">Tudo que cliente nova costuma perguntar.</h2>
+    </div>
+
+    <div class="faq__list">
+      <details class="faq__item reveal" data-delay="1">
+        <summary class="faq__summary">
+          Quais tamanhos vocês têm?
+          <span class="faq__plus" aria-hidden="true">+</span>
+        </summary>
+        <div class="faq__body">
+          Do 33 ao 40 na maioria dos modelos. Numerações maiores ou menores a gente encomenda direto com o fornecedor — chama no WhatsApp que a gente verifica disponibilidade.
+        </div>
+      </details>
+
+      <details class="faq__item reveal" data-delay="2">
+        <summary class="faq__summary">
+          Tem estacionamento por perto?
+          <span class="faq__plus" aria-hidden="true">+</span>
+        </summary>
+        <div class="faq__body">
+          A Av. Dom Pedro I tem zona azul e sempre rola vaga na quadra. Se não der, tem um pátio na rua de trás — fica a um quarteirão.
+        </div>
+      </details>
+
+      <details class="faq__item reveal" data-delay="3">
+        <summary class="faq__summary">
+          Vocês fazem encomenda de modelo específico?
+          <span class="faq__plus" aria-hidden="true">+</span>
+        </summary>
+        <div class="faq__body">
+          Sim! Se a gente não tem o modelo ou a cor que você quer em loja, manda foto ou referência no WhatsApp que a gente busca com os fornecedores.
+        </div>
+      </details>
+
+      <details class="faq__item reveal" data-delay="4">
+        <summary class="faq__summary">
+          Dá pra ver peças por WhatsApp antes de ir aí?
+          <span class="faq__plus" aria-hidden="true">+</span>
+        </summary>
+        <div class="faq__body">
+          Claro. Manda mensagem dizendo o que procura (tamanho, ocasião, faixa de preço) e a gente envia fotos das opções que temos. Sem compromisso de comprar.
+        </div>
+      </details>
+
+      <details class="faq__item reveal" data-delay="5">
+        <summary class="faq__summary">
+          Posso passar só pra olhar?
+          <span class="faq__plus" aria-hidden="true">+</span>
+        </summary>
+        <div class="faq__body">
+          Pode e adoramos! Aqui ninguém é abordada na porta. Entra, dá uma volta, pega, experimenta. A gente está aqui se você precisar.
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final">
+  <div class="container">
+    <div class="cta-final__inner">
+      <span class="eyebrow reveal" style="color:var(--c-accent)">A gente te espera</span>
+      <h2 class="reveal" data-delay="1">Pronto pra <em>passar aqui</em>?</h2>
+      <p class="reveal" data-delay="2">Chama no WhatsApp e a gente já te recebe com tudo separado.</p>
+      <a class="btn btn--wa reveal" data-delay="3" href="https://wa.me/551935716098" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-1 1.1-.2.2-.4.2-.7.1-.3-.1-1.2-.4-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.4.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.7-1.7-.9-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.3 5.2 4.6.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 3a9 9 0 0 0-7.7 13.6L3 21l4.5-1.2A9 9 0 1 0 12 3z"/></svg>
+        Falar no WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__col">
+        <div class="brand footer__brand">Iara<em>Modas</em><span class="brand__dot"></span></div>
+        <p class="footer__tagline">Moda e conforto que te reconhecem. Calçados, looks e atendimento acolhedor em Leme — SP.</p>
+        <div class="footer__social">
+          <a href="https://wa.me/551935716098" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-1 1.1-.2.2-.4.2-.7.1-.3-.1-1.2-.4-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.4.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.7-1.7-.9-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.3 5.2 4.6.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 3a9 9 0 0 0-7.7 13.6L3 21l4.5-1.2A9 9 0 1 0 12 3z"/></svg>
+          </a>
+          <a href="https://www.facebook.com/iaramodasleme" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.6 9.87v-6.98H7.9V12h2.5V9.8c0-2.5 1.49-3.88 3.77-3.88 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.98A10 10 0 0 0 22 12z"/></svg>
+          </a>
+          <a href="tel:+551935716098" aria-label="Telefone">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </a>
+          <a href="https://www.google.com/maps?q=Av.+Dom+Pedro+I,+172,+Jardim+Santa+Rita,+Leme+-+SP" target="_blank" rel="noopener" aria-label="Como chegar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer__col">
+        <h4>Navegue</h4>
+        <ul>
+          <li><a href="index.html#sobre">Sobre</a></li>
+          <li><a href="index.html#categorias">Coleção</a></li>
+          <li><a href="experiencia.html">Experiência</a></li>
+          <li><a href="index.html#avaliacoes">Clientes</a></li>
+          <li><a href="index.html#contato">Visite</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <h4>Contato</h4>
+        <ul>
+          <li><a href="tel:+551935716098">(19) 3571-6098</a></li>
+          <li><a href="https://wa.me/551935716098" target="_blank" rel="noopener">WhatsApp direto</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <h4>Visite</h4>
+        <ul>
+          <li>Av. Dom Pedro I, 172</li>
+          <li>Jd. Santa Rita · Leme/SP</li>
+          <li>Seg a sáb · até 18h</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <span>© <span id="year"></span> Iara Modas Calçados · Leme, SP</span>
+      <span>Feito com carinho para quem ama uma boa loja de bairro.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- FAB -->
+<a class="fab-wa" href="https://wa.me/551935716098" target="_blank" rel="noopener" aria-label="Fale com a Iara Modas no WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-1 1.1-.2.2-.4.2-.7.1-.3-.1-1.2-.4-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.4.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.7-1.7-.9-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.3 5.2 4.6.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 3a9 9 0 0 0-7.7 13.6L3 21l4.5-1.2A9 9 0 1 0 12 3z"/></svg>
+</a>
+
+<button class="fab-top" id="fabTop" aria-label="Voltar ao topo">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<script>
+(() => {
+  const nav = document.getElementById('nav');
+  const fabTop = document.getElementById('fabTop');
+  const burger = document.getElementById('navBurger');
+  const navLinks = document.getElementById('navLinks');
+
+  const onScroll = () => {
+    nav.classList.toggle('scrolled', window.scrollY > 24);
+    fabTop.classList.toggle('visible', window.scrollY > 600);
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  burger.addEventListener('click', () => {
+    const open = nav.classList.toggle('open');
+    burger.setAttribute('aria-expanded', open);
+  });
+  navLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      nav.classList.remove('open');
+      burger.setAttribute('aria-expanded', false);
+    });
+  });
+
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reveals = document.querySelectorAll('.reveal');
+  if (reduce || !('IntersectionObserver' in window)) {
+    reveals.forEach(el => el.classList.add('in'));
+  } else {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+    reveals.forEach(el => io.observe(el));
+  }
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+  fabTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+  });
+
+  onScroll();
+})();
+</script>
+
+</body>
+</html>
