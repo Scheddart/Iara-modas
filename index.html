@@ -251,8 +251,11 @@ body::before{
   pointer-events:none;
   opacity:0;
   transition:opacity 1.2s ease;
+  /* só renderiza no lado direito do hero, longe do texto */
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, transparent 38%, rgba(0,0,0,.4) 50%, #000 65%, #000 100%);
+          mask-image: linear-gradient(90deg, transparent 0%, transparent 38%, rgba(0,0,0,.4) 50%, #000 65%, #000 100%);
 }
-.hero__bg-canvas.is-ready{opacity:.85}
+.hero__bg-canvas.is-ready{opacity:.62}
 
 .hero__inner{
   position:relative;
@@ -388,31 +391,39 @@ body::before{
 }
 .hero__badge{
   position:absolute;
-  top:50%;right:-12%;
-  width:120px;height:120px;
-  background:var(--c-bg);
-  border:1.5px solid var(--c-line);
+  top:42%;right:-14%;
+  width:160px;height:160px;
   border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  text-align:center;
   z-index:4;
-  font-family:var(--font-display);
-  font-style:italic;
-  font-size:.95rem;
-  color:var(--c-text);
-  line-height:1.2;
-  padding:14px;
-  box-shadow:var(--shadow-sm);
-  animation:slowSpin 22s linear infinite;
+  /* fallback color caso a foto falhe */
+  background:linear-gradient(135deg, #1E3A5F 0%, #D9A03E 100%);
+  border:5px solid var(--c-white);
+  box-shadow:0 18px 40px -10px rgba(20,40,69,.4), 0 6px 16px rgba(20,40,69,.18);
+  overflow:hidden;
+  animation:badgeFloat 5.5s ease-in-out infinite;
 }
-.hero__badge span{font-style:normal;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;font-family:var(--font-body);color:var(--c-primary)}
-@keyframes slowSpin{to{transform:rotate(360deg)}}
+.hero__badge::before{
+  content:"";
+  position:absolute;inset:0;
+  background:url("https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=480&q=85&auto=format&fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.55") center/cover no-repeat;
+  filter:saturate(.95);
+}
+.hero__badge::after{
+  content:"";
+  position:absolute;inset:0;
+  background:linear-gradient(135deg, rgba(20,40,69,.22) 0%, rgba(217,160,62,.30) 100%);
+  pointer-events:none;
+}
+@keyframes badgeFloat{
+  0%,100%{transform:translateY(0) rotate(-3deg)}
+  50%{transform:translateY(-10px) rotate(3deg)}
+}
 
 @media (max-width:860px){
   .hero{padding:120px 0 60px;min-height:auto}
   .hero__inner{grid-template-columns:1fr;gap:48px}
   .hero__visual{max-width:380px;margin:0 auto}
-  .hero__badge{right:-8%;width:96px;height:96px;font-size:.78rem}
+  .hero__badge{right:-8%;width:118px;height:118px;border-width:4px;top:48%}
 }
 
 /* ============ MARQUEE ============ */
@@ -1204,13 +1215,7 @@ section{position:relative;z-index:2;padding:clamp(80px, 10vw, 140px) 0}
       <div class="hero__card hero__card--main"></div>
       <div class="hero__card hero__card--accent"></div>
       <div class="hero__card hero__card--soft"></div>
-      <div class="hero__badge">
-        <div>
-          <span>tradição</span><br/>
-          Iara<br/>
-          <span>em Leme</span>
-        </div>
-      </div>
+      <div class="hero__badge" aria-hidden="true"></div>
     </div>
   </div>
 </header>
@@ -1677,13 +1682,13 @@ section{position:relative;z-index:2;padding:clamp(80px, 10vw, 140px) 0}
     redLight.position.set(0, -5, 3);
     scene.add(redLight);
 
-    // ── Shapes ──
+    // ── Shapes (right-side cluster only) ──
     const palette = [0x1E3A5F, 0xD9A03E, 0xC44A3D, 0xECD9B3, 0xD9A03E];
     const shapes = [];
-    const N = 10;
+    const N = 7;
 
     const makeGeo = (i) => {
-      const r = 0.32 + Math.random() * 0.42;
+      const r = 0.22 + Math.random() * 0.28; // menor que antes
       if (i % 3 === 0) return new THREE.IcosahedronGeometry(r, 0);
       if (i % 3 === 1) return new THREE.SphereGeometry(r * 0.95, 48, 48);
       return new THREE.OctahedronGeometry(r, 0);
@@ -1703,13 +1708,12 @@ section{position:relative;z-index:2;padding:clamp(80px, 10vw, 140px) 0}
         ior: 1.4,
       });
       const mesh = new THREE.Mesh(geo, mat);
-      // Bias position to the right side (where hero__visual lives) and back
-      const xSpread = 8;
-      const ySpread = 5;
+      // Cluster shapes EXCLUSIVELY on the right (x: 1.8 → 6.5)
+      // where the hero__visual is. The CSS mask hides the left side anyway.
       mesh.position.set(
-        (Math.random() - 0.35) * xSpread,
-        (Math.random() - 0.5) * ySpread,
-        (Math.random() - 0.5) * 5 - 2
+        1.8 + Math.random() * 4.7,
+        (Math.random() - 0.5) * 4,
+        (Math.random() - 0.5) * 3.5 - 1.5
       );
       mesh.userData = {
         base: mesh.position.clone(),
@@ -1720,7 +1724,7 @@ section{position:relative;z-index:2;padding:clamp(80px, 10vw, 140px) 0}
         ),
         floatOffset: Math.random() * Math.PI * 2,
         floatSpeed: 0.25 + Math.random() * 0.4,
-        floatAmp: 0.25 + Math.random() * 0.4,
+        floatAmp: 0.2 + Math.random() * 0.3,
       };
       shapes.push(mesh);
       scene.add(mesh);
