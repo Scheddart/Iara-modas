@@ -252,7 +252,7 @@ body::before{
   padding-bottom:150px;
   opacity:0;visibility:hidden;
   z-index:1;
-  transition:opacity 1.6s cubic-bezier(.4,0,.2,1), visibility 1.6s ease;
+  transition:opacity 1.2s cubic-bezier(.4,0,.2,1), visibility 1.2s ease;
 }
 .hero-slide.is-active{opacity:1;visibility:visible;z-index:2}
 
@@ -262,11 +262,11 @@ body::before{
   background-size:cover;
   background-position:center;
   background-color:var(--c-primary-d);
-  transform:scale(1.12);
-  transition:transform 12s cubic-bezier(.25,.1,.25,1);
+  transform:scale(1.10);
+  transition:transform 7s cubic-bezier(.25,.1,.25,1);
   will-change:transform;
 }
-.hero-slide.is-active .hero-slide__media{transform:scale(1)} /* Ken Burns longer */
+.hero-slide.is-active .hero-slide__media{transform:scale(1)} /* Ken Burns visível no intervalo de 4s */
 
 .hero-slide__overlay{
   position:absolute;inset:0;
@@ -281,25 +281,27 @@ body::before{
   max-width:740px;
   color:var(--c-white);
 }
-/* stagger fade-in dos elementos — fluido com blur + slide
-   usa animation (não transition) pra disparar no primeiro load */
+/* stagger fade-in — animação multi-stage pra entrada gentil
+   (blur dissolve antes do slide terminar, sem "pouso duro") */
 .hero-slide__inner > *{
   opacity:0;
-  transform:translateY(36px);
-  filter:blur(8px);
+  transform:translateY(20px);
+  filter:blur(5px);
   will-change:opacity, transform, filter;
 }
 @keyframes heroContentIn{
-  to{opacity:1;transform:none;filter:blur(0)}
+  0%   {opacity:0; transform:translateY(20px); filter:blur(5px)}
+  55%  {opacity:.85; filter:blur(.5px)}
+  100% {opacity:1; transform:none; filter:blur(0)}
 }
 .hero-slide.is-active .hero-slide__inner > *{
-  animation:heroContentIn 1.3s cubic-bezier(.16,1,.3,1) both;
+  animation:heroContentIn 1.4s cubic-bezier(.25,.46,.45,.94) both;
 }
-.hero-slide.is-active .hero-slide__inner > *:nth-child(1){animation-delay:.45s}
-.hero-slide.is-active .hero-slide__inner > *:nth-child(2){animation-delay:.65s}
-.hero-slide.is-active .hero-slide__inner > *:nth-child(3){animation-delay:.85s}
-.hero-slide.is-active .hero-slide__inner > *:nth-child(4){animation-delay:1.05s}
-.hero-slide.is-active .hero-slide__inner > *:nth-child(5){animation-delay:1.25s}
+.hero-slide.is-active .hero-slide__inner > *:nth-child(1){animation-delay:.15s}
+.hero-slide.is-active .hero-slide__inner > *:nth-child(2){animation-delay:.32s}
+.hero-slide.is-active .hero-slide__inner > *:nth-child(3){animation-delay:.5s}
+.hero-slide.is-active .hero-slide__inner > *:nth-child(4){animation-delay:.7s}
+.hero-slide.is-active .hero-slide__inner > *:nth-child(5){animation-delay:.9s}
 
 .hero-slide__inner .eyebrow{color:var(--c-accent)}
 .hero-slide__inner h1{
@@ -1236,7 +1238,7 @@ section{position:relative;z-index:2;padding:clamp(80px, 10vw, 140px) 0}
 
 <!-- HERO (carrossel full-screen) -->
 <header class="hero" id="topo">
-  <div class="hero-carousel" id="heroCarousel" data-autoplay="6500" aria-roledescription="carousel" aria-label="Banners principais da Iara Modas">
+  <div class="hero-carousel" id="heroCarousel" data-autoplay="4000" aria-roledescription="carousel" aria-label="Banners principais da Iara Modas">
 
     <!-- ── Slide 1 ── -->
     <article class="hero-slide is-active" style="--bg:url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1920&q=80&auto=format&fit=crop')" aria-roledescription="slide" aria-label="1 de 2">
