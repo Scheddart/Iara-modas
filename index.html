@@ -14,7 +14,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="preconnect" href="https://images.unsplash.com" />
-<script src="https://unpkg.com/three@0.160.0/build/three.min.js" defer></script>
 
 <style>
 /* ============ TOKENS ============ */
@@ -230,200 +229,200 @@ body::before{
   .nav__burger{display:flex;z-index:2}
 }
 
-/* ============ HERO ============ */
+/* ============ HERO (full-screen carousel) ============ */
 .hero{
   position:relative;
-  min-height:100vh;
-  padding:140px 0 80px;
-  display:flex;align-items:center;
+  height:100vh;
+  min-height:640px;
+  max-height:920px;
   overflow:hidden;
-  background:
-    radial-gradient(ellipse 80% 60% at 82% 18%, rgba(217, 160, 62, .28), transparent 60%),
-    radial-gradient(ellipse 70% 50% at 10% 82%, rgba(30, 58, 95, .10), transparent 60%),
-    var(--c-bg);
+  background:var(--c-text); /* dark fallback enquanto slides carregam */
 }
-.hero__bg-canvas{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  z-index:1;
-  pointer-events:none;
-  opacity:0;
-  transition:opacity 1.2s ease;
-  /* só renderiza no lado direito do hero, longe do texto */
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, transparent 38%, rgba(0,0,0,.4) 50%, #000 65%, #000 100%);
-          mask-image: linear-gradient(90deg, transparent 0%, transparent 38%, rgba(0,0,0,.4) 50%, #000 65%, #000 100%);
-}
-.hero__bg-canvas.is-ready{opacity:.62}
+.hero-carousel{position:absolute;inset:0}
 
-.hero__inner{
-  position:relative;
-  z-index:2;
-  display:grid;
-  grid-template-columns: 1.1fr .9fr;
-  gap:clamp(40px, 6vw, 80px);
-  align-items:center;
+.hero-slide{
+  position:absolute;inset:0;
+  display:flex;align-items:flex-end;
+  padding-bottom:140px;
+  opacity:0;visibility:hidden;
+  z-index:1;
+  transition:opacity 1.4s ease, visibility 1.4s ease;
+}
+.hero-slide.is-active{opacity:1;visibility:visible;z-index:2}
+
+.hero-slide__media{
+  position:absolute;inset:0;
+  background-image:var(--bg);
+  background-size:cover;
+  background-position:center;
+  background-color:var(--c-primary-d); /* fallback caso a foto falhe */
+  transform:scale(1.08);
+  transition:transform 9s cubic-bezier(.4,0,.2,1);
+}
+.hero-slide.is-active .hero-slide__media{transform:scale(1)} /* Ken Burns */
+
+.hero-slide__overlay{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(105deg, rgba(20,40,69,.82) 0%, rgba(20,40,69,.6) 38%, rgba(20,40,69,.22) 72%, rgba(20,40,69,.05) 100%),
+    linear-gradient(180deg, rgba(20,40,69,0) 35%, rgba(20,40,69,.55) 100%);
+}
+
+.hero-slide__inner{
+  position:relative;z-index:2;
   width:100%;
-  perspective:1200px;
+  max-width:720px;
+  color:var(--c-white);
 }
-.hero__copy{position:relative;z-index:2}
-.hero h1{
+/* stagger fade-in dos elementos */
+.hero-slide__inner > *{opacity:0;transform:translateY(20px);transition:opacity .8s ease, transform .8s cubic-bezier(.2,.7,.3,1)}
+.hero-slide.is-active .hero-slide__inner > *{opacity:1;transform:none}
+.hero-slide.is-active .hero-slide__inner > *:nth-child(1){transition-delay:.35s}
+.hero-slide.is-active .hero-slide__inner > *:nth-child(2){transition-delay:.5s}
+.hero-slide.is-active .hero-slide__inner > *:nth-child(3){transition-delay:.65s}
+.hero-slide.is-active .hero-slide__inner > *:nth-child(4){transition-delay:.8s}
+.hero-slide.is-active .hero-slide__inner > *:nth-child(5){transition-delay:.95s}
+
+.hero-slide__inner .eyebrow{color:var(--c-accent)}
+.hero-slide__inner h1{
+  color:var(--c-white);
+  font-size:clamp(2.4rem, 5vw + .5rem, 5rem);
   margin:18px 0 22px;
+  text-shadow:0 2px 30px rgba(20,40,69,.45);
 }
-.hero h1 em{
-  font-style:italic;
-  color:var(--c-accent-d);
+.hero-slide__inner h1 em{
+  font-style:italic;color:var(--c-accent);
   font-variation-settings:"opsz" 144, "SOFT" 100;
 }
-.hero__sub{
-  font-size:clamp(1.05rem, .4vw + 1rem, 1.25rem);
-  color:var(--c-text-soft);
-  max-width:520px;
-  margin-bottom:36px;
+.hero-slide__sub{
+  font-size:clamp(1.05rem, .4vw + 1rem, 1.22rem);
+  color:rgba(255,252,245,.92);
+  max-width:560px;
+  margin-bottom:34px;
   line-height:1.55;
+  text-shadow:0 1px 16px rgba(20,40,69,.5);
 }
-.hero__ctas{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.hero-slide__ctas{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
 
+.hero-slide__rating{
+  display:inline-flex;align-items:center;gap:14px;
+  margin-top:30px;
+  padding:10px 18px 10px 14px;
+  background:rgba(255,252,245,.12);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  border:1px solid rgba(255,252,245,.22);
+  border-radius:var(--r-full);
+  font-size:.88rem;color:var(--c-white);
+}
+.hero-slide__rating .stars{color:var(--c-accent);letter-spacing:1px;font-size:.95rem}
+.hero-slide__rating strong{color:var(--c-white);font-weight:600}
+
+/* ── Buttons (shared) ── */
 .btn{
   display:inline-flex;align-items:center;gap:.6em;
   padding:16px 28px;
   border-radius:var(--r-full);
   font-size:.98rem;font-weight:500;
-  transition:transform var(--t-fast), background var(--t-fast), color var(--t-fast), box-shadow var(--t-fast);
+  transition:transform var(--t-fast), background var(--t-fast), color var(--t-fast), box-shadow var(--t-fast), border-color var(--t-fast);
   white-space:nowrap;
 }
 .btn svg{width:18px;height:18px;transition:transform var(--t-fast)}
 .btn:hover svg{transform:translateX(3px)}
 .btn--primary{
-  background:var(--c-primary);
-  color:var(--c-white);
-  box-shadow:0 8px 20px -6px rgba(30,58,95,.45);
+  background:var(--c-accent);color:var(--c-primary);
+  box-shadow:0 12px 28px -8px rgba(217,160,62,.55);
+  font-weight:600;
 }
-.btn--primary:hover{background:var(--c-primary-d);transform:translateY(-2px);box-shadow:0 14px 28px -8px rgba(30,58,95,.55)}
+.btn--primary:hover{background:var(--c-accent-d);color:var(--c-white);transform:translateY(-2px);box-shadow:0 18px 36px -10px rgba(181,131,41,.6)}
 .btn--ghost{
-  background:transparent;
-  color:var(--c-text);
+  background:transparent;color:var(--c-text);
   border:1.5px solid var(--c-text);
 }
 .btn--ghost:hover{background:var(--c-text);color:var(--c-bg)}
+.btn--ghost-light{
+  background:rgba(255,252,245,.08);
+  color:var(--c-white);
+  border:1.5px solid rgba(255,252,245,.7);
+  backdrop-filter:blur(8px);
+}
+.btn--ghost-light:hover{
+  background:var(--c-white);color:var(--c-primary);
+  border-color:var(--c-white);transform:translateY(-2px);
+}
 .btn--wa{
   background:#25D366;color:#fff;
   box-shadow:0 8px 20px -6px rgba(37,211,102,.5);
 }
 .btn--wa:hover{background:#1ebd5b;transform:translateY(-2px)}
 
-.hero__rating{
-  display:inline-flex;align-items:center;gap:14px;
-  padding:10px 18px 10px 14px;
-  background:rgba(255,252,247,.7);
-  backdrop-filter:blur(10px);
-  border:1px solid rgba(224,205,184,.6);
+/* ── Carousel dots ── */
+.hero-carousel__dots{
+  position:absolute;
+  bottom:36px;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  gap:10px;
+  z-index:5;
+  padding:10px 18px;
+  background:rgba(20,40,69,.32);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  border:1px solid rgba(255,252,245,.12);
   border-radius:var(--r-full);
-  font-size:.88rem;
 }
-.hero__rating strong{color:var(--c-text);font-weight:600}
-.hero__rating .stars{color:var(--c-accent);letter-spacing:1px;font-size:.95rem}
+.hero-carousel__dot{
+  width:30px;
+  height:5px;
+  border-radius:3px;
+  background:rgba(255,252,245,.35);
+  cursor:pointer;
+  transition:background .4s, width .55s cubic-bezier(.2,.7,.3,1);
+  padding:0;
+}
+.hero-carousel__dot:hover{background:rgba(255,252,245,.65)}
+.hero-carousel__dot.is-active{
+  background:var(--c-accent);
+  width:56px;
+}
 
-/* Hero visual — collage of stylized cards */
-.hero__visual{
-  position:relative;
-  aspect-ratio:1/1.05;
-  max-width:520px;
-  margin-left:auto;
-  transform-style:preserve-3d;
-  transition:transform .6s cubic-bezier(.2,.7,.3,1);
-  will-change:transform;
-}
-.hero__card{
+/* ── Scroll cue ── */
+.hero-cue{
   position:absolute;
-  border-radius:var(--r-lg);
-  overflow:hidden;
-  box-shadow:var(--shadow-md);
-  background:var(--c-soft);
+  bottom:36px;
+  right:36px;
+  z-index:5;
+  display:inline-flex;align-items:center;gap:10px;
+  color:rgba(255,252,245,.7);
+  font-size:.75rem;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  font-weight:500;
 }
-.hero__card--main{
-  inset:0 8% 14% 14%;
-  background:
-    radial-gradient(ellipse at 30% 30%, rgba(255,252,247,.4), transparent 60%),
-    linear-gradient(135deg, #1E3A5F 0%, #142845 100%);
-  transform:rotate(-3deg);
-}
-.hero__card--main::after{
+.hero-cue::after{
   content:"";
-  position:absolute;inset:18%;
-  background:
-    radial-gradient(circle at 50% 40%, rgba(248,241,231,.95) 30%, transparent 31%),
-    radial-gradient(circle at 50% 70%, rgba(248,241,231,.7) 18%, transparent 19%);
+  display:inline-block;
+  width:1px;height:36px;
+  background:linear-gradient(to bottom, rgba(255,252,245,.7), transparent);
+  animation:cueFall 2.2s ease-in-out infinite;
 }
-.hero__card--accent{
-  width:42%;aspect-ratio:1/1.2;
-  top:6%;right:0;
-  background:linear-gradient(160deg, #D9A03E, #B58329);
-  transform:rotate(6deg);
-  z-index:2;
-}
-.hero__card--accent::after{
-  content:"♥";
-  position:absolute;inset:0;
-  display:flex;align-items:center;justify-content:center;
-  font-family:var(--font-display);
-  font-size:5rem;color:rgba(255,252,247,.85);
-  font-style:italic;
-}
-.hero__card--soft{
-  width:38%;aspect-ratio:1/.85;
-  bottom:0;left:0;
-  background:linear-gradient(150deg, #ECD9B3, #D9A03E);
-  transform:rotate(-8deg);
-  z-index:3;
-}
-.hero__card--soft::after{
-  content:"Iara";
-  position:absolute;inset:0;
-  display:flex;align-items:center;justify-content:center;
-  font-family:var(--font-display);
-  font-style:italic;
-  font-size:2.2rem;
-  color:var(--c-text);
-  opacity:.85;
-  font-variation-settings:"opsz" 144;
-}
-.hero__badge{
-  position:absolute;
-  top:42%;right:-14%;
-  width:160px;height:160px;
-  border-radius:50%;
-  z-index:4;
-  /* fallback color caso a foto falhe */
-  background:linear-gradient(135deg, #1E3A5F 0%, #D9A03E 100%);
-  border:5px solid var(--c-white);
-  box-shadow:0 18px 40px -10px rgba(20,40,69,.4), 0 6px 16px rgba(20,40,69,.18);
-  overflow:hidden;
-  animation:badgeFloat 5.5s ease-in-out infinite;
-}
-.hero__badge::before{
-  content:"";
-  position:absolute;inset:0;
-  background:url("https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=480&q=85&auto=format&fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.55") center/cover no-repeat;
-  filter:saturate(.95);
-}
-.hero__badge::after{
-  content:"";
-  position:absolute;inset:0;
-  background:linear-gradient(135deg, rgba(20,40,69,.22) 0%, rgba(217,160,62,.30) 100%);
-  pointer-events:none;
-}
-@keyframes badgeFloat{
-  0%,100%{transform:translateY(0) rotate(-3deg)}
-  50%{transform:translateY(-10px) rotate(3deg)}
+@keyframes cueFall{
+  0%,100%{transform:scaleY(.5);transform-origin:top;opacity:.4}
+  50%{transform:scaleY(1);opacity:1}
 }
 
 @media (max-width:860px){
-  .hero{padding:120px 0 60px;min-height:auto}
-  .hero__inner{grid-template-columns:1fr;gap:48px}
-  .hero__visual{max-width:380px;margin:0 auto}
-  .hero__badge{right:-8%;width:118px;height:118px;border-width:4px;top:48%}
+  .hero{height:auto;min-height:88vh;max-height:none}
+  .hero-slide{padding-bottom:130px;align-items:center;padding-top:96px}
+  .hero-slide__inner{padding-top:40px}
+  .hero-slide__inner h1{font-size:clamp(2rem, 8vw, 3rem)}
+  .hero-slide__overlay{
+    background:
+      linear-gradient(180deg, rgba(20,40,69,.5) 0%, rgba(20,40,69,.4) 40%, rgba(20,40,69,.7) 100%);
+  }
+  .hero-carousel__dots{bottom:24px}
+  .hero-cue{display:none}
 }
 
 /* ============ MARQUEE ============ */
@@ -483,9 +482,11 @@ section{position:relative;z-index:2;padding:clamp(80px, 10vw, 140px) 0}
   aspect-ratio:4/5;
   border-radius:var(--r-lg);
   overflow:hidden;
+  /* foto Unsplash + fallback gradient */
   background:
-    radial-gradient(circle at 30% 20%, rgba(217,160,62,.45), transparent 60%),
+    url("https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=900&q=85&auto=format&fit=crop") center/cover no-repeat,
     linear-gradient(160deg, var(--c-soft), var(--c-accent));
+  background-color:var(--c-soft);
   box-shadow:var(--shadow-lg);
 }
 .sobre__visual::before{
@@ -494,24 +495,29 @@ section{position:relative;z-index:2;padding:clamp(80px, 10vw, 140px) 0}
   border:1px solid rgba(255,252,247,.4);
   border-radius:calc(var(--r-lg) - 8px);
   pointer-events:none;
+  z-index:2;
 }
+/* subtle warm overlay para integrar com a paleta da marca + escurecer no rodapé pra legibilidade da tag */
 .sobre__visual::after{
   content:"";
   position:absolute;inset:0;
   background:
-    radial-gradient(circle at 50% 65%, rgba(250,245,235,.5) 0%, transparent 50%),
-    radial-gradient(circle at 75% 25%, rgba(30,58,95,.38) 0%, transparent 40%);
+    linear-gradient(180deg, rgba(20,40,69,0) 50%, rgba(20,40,69,.45) 100%),
+    linear-gradient(135deg, rgba(217,160,62,.12) 0%, rgba(20,40,69,.18) 100%);
+  pointer-events:none;
 }
 .sobre__visual-tag{
   position:absolute;
   bottom:32px;left:32px;
-  background:var(--c-white);
+  background:rgba(255,252,245,.96);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
   padding:14px 20px;
   border-radius:var(--r-md);
   font-size:.85rem;font-weight:500;
   color:var(--c-text);
   box-shadow:var(--shadow-md);
-  z-index:2;
+  z-index:3;
 }
 .sobre__visual-tag strong{display:block;font-family:var(--font-display);font-size:1.2rem;color:var(--c-primary);margin-bottom:2px}
 
@@ -1133,18 +1139,6 @@ section{position:relative;z-index:2;padding:clamp(80px, 10vw, 140px) 0}
 .reveal[data-delay="3"]{transition-delay:.3s}
 .reveal[data-delay="4"]{transition-delay:.4s}
 
-/* Hero entrance — fires on load */
-.hero .reveal-load{
-  opacity:0;transform:translateY(20px);
-  animation:loadUp 1s cubic-bezier(.2,.7,.3,1) forwards;
-}
-.hero .reveal-load[data-delay="1"]{animation-delay:.1s}
-.hero .reveal-load[data-delay="2"]{animation-delay:.25s}
-.hero .reveal-load[data-delay="3"]{animation-delay:.4s}
-.hero .reveal-load[data-delay="4"]{animation-delay:.55s}
-.hero .reveal-load[data-delay="5"]{animation-delay:.7s}
-@keyframes loadUp{to{opacity:1;transform:none}}
-
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{
     animation-duration:.01ms!important;
@@ -1181,42 +1175,68 @@ section{position:relative;z-index:2;padding:clamp(80px, 10vw, 140px) 0}
   </div>
 </nav>
 
-<!-- HERO -->
+<!-- HERO (carrossel full-screen) -->
 <header class="hero" id="topo">
-  <canvas id="heroCanvas" class="hero__bg-canvas" aria-hidden="true"></canvas>
-  <div class="container hero__inner">
-    <div class="hero__copy">
-      <span class="eyebrow reveal-load">Leme · SP · desde sempre com você</span>
-      <h1 class="reveal-load" data-delay="1">
-        Moda e <em>conforto</em><br/>que te reconhecem
-      </h1>
-      <p class="hero__sub reveal-load" data-delay="2">
-        Calçados e looks para todo estilo — com o atendimento mais
-        acolhedor de Leme. Aqui você não é só mais uma cliente: a gente
-        lembra do seu nome, do seu jeito e do seu número.
-      </p>
-      <div class="hero__ctas reveal-load" data-delay="3">
-        <a class="btn btn--primary" href="https://wa.me/551935716098?text=Ol%C3%A1!%20Quero%20ver%20a%20cole%C3%A7%C3%A3o%20da%20Iara%20Modas." target="_blank" rel="noopener">
-          Ver coleção
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-        </a>
-        <a class="btn btn--ghost" href="https://wa.me/551935716098" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-1 1.1-.2.2-.4.2-.7.1-.3-.1-1.2-.4-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.4.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.7-1.7-.9-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.3 5.2 4.6.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 3a9 9 0 0 0-7.7 13.6L3 21l4.5-1.2A9 9 0 1 0 12 3z"/></svg>
-          Fale pelo WhatsApp
-        </a>
+  <div class="hero-carousel" id="heroCarousel" data-autoplay="6500" aria-roledescription="carousel" aria-label="Banners principais da Iara Modas">
+
+    <!-- ── Slide 1 ── -->
+    <article class="hero-slide is-active" style="--bg:url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1920&q=80&auto=format&fit=crop')" aria-roledescription="slide" aria-label="1 de 2">
+      <div class="hero-slide__media" aria-hidden="true"></div>
+      <div class="hero-slide__overlay" aria-hidden="true"></div>
+      <div class="container hero-slide__inner">
+        <span class="eyebrow">Leme · SP · desde sempre com você</span>
+        <h1>Moda e <em>conforto</em> que te reconhecem.</h1>
+        <p class="hero-slide__sub">
+          Calçados e looks para todo estilo — com o atendimento mais
+          acolhedor de Leme. Aqui você não é só mais uma cliente.
+        </p>
+        <div class="hero-slide__ctas">
+          <a class="btn btn--primary" href="https://wa.me/551935716098?text=Ol%C3%A1!%20Quero%20ver%20a%20cole%C3%A7%C3%A3o%20da%20Iara%20Modas." target="_blank" rel="noopener">
+            Ver coleção
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+          <a class="btn btn--ghost-light" href="https://wa.me/551935716098" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-1 1.1-.2.2-.4.2-.7.1-.3-.1-1.2-.4-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.4.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.7-1.7-.9-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.3 5.2 4.6.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 3a9 9 0 0 0-7.7 13.6L3 21l4.5-1.2A9 9 0 1 0 12 3z"/></svg>
+            Fale pelo WhatsApp
+          </a>
+        </div>
+        <div class="hero-slide__rating">
+          <span class="stars" aria-hidden="true">★★★★★</span>
+          <span><strong>4,6 no Google</strong> · 208 avaliações reais</span>
+        </div>
       </div>
-      <div class="hero__rating reveal-load" data-delay="4" style="margin-top:36px">
-        <span class="stars" aria-hidden="true">★★★★★</span>
-        <span><strong>4,6 no Google</strong> · 208 avaliações reais</span>
+    </article>
+
+    <!-- ── Slide 2 ── -->
+    <article class="hero-slide" style="--bg:url('https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=1920&q=80&auto=format&fit=crop')" aria-roledescription="slide" aria-label="2 de 2">
+      <div class="hero-slide__media" aria-hidden="true"></div>
+      <div class="hero-slide__overlay" aria-hidden="true"></div>
+      <div class="container hero-slide__inner">
+        <span class="eyebrow">A nossa coleção</span>
+        <h1>Cada passo merece <em>cuidado</em>.</h1>
+        <p class="hero-slide__sub">
+          Tênis pro trabalho, sandália pra festa, scarpin pra ocasião especial.
+          Selecionado a dedo — no seu tamanho, do seu jeito.
+        </p>
+        <div class="hero-slide__ctas">
+          <a class="btn btn--primary" href="#categorias">
+            Ver a coleção
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+          <a class="btn btn--ghost-light" href="experiencia.html">
+            Como funciona uma visita
+          </a>
+        </div>
       </div>
+    </article>
+
+    <!-- ── Indicadores ── -->
+    <div class="hero-carousel__dots" role="tablist" aria-label="Selecionar banner">
+      <button class="hero-carousel__dot is-active" type="button" data-slide="0" aria-label="Banner 1" role="tab" aria-selected="true"></button>
+      <button class="hero-carousel__dot" type="button" data-slide="1" aria-label="Banner 2" role="tab" aria-selected="false"></button>
     </div>
 
-    <div class="hero__visual reveal-load" data-delay="2" aria-hidden="true">
-      <div class="hero__card hero__card--main"></div>
-      <div class="hero__card hero__card--accent"></div>
-      <div class="hero__card hero__card--soft"></div>
-      <div class="hero__badge" aria-hidden="true"></div>
-    </div>
+    <span class="hero-cue" aria-hidden="true">role pra ver</span>
   </div>
 </header>
 
@@ -1636,194 +1656,66 @@ section{position:relative;z-index:2;padding:clamp(80px, 10vw, 140px) 0}
   onScroll();
 })();
 
-/* ============ HERO 3D SCENE (Three.js) ============ */
+/* ============ HERO CAROUSEL ============ */
 (() => {
-  const canvas = document.getElementById('heroCanvas');
-  if (!canvas) return;
+  const carousel = document.getElementById('heroCarousel');
+  if (!carousel) return;
 
-  // Skip 3D on small screens / reduced motion / no WebGL
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const isSmall = window.matchMedia('(max-width: 720px)').matches;
-  if (isSmall) { canvas.remove(); return; }
+  const slides = carousel.querySelectorAll('.hero-slide');
+  const dots = carousel.querySelectorAll('.hero-carousel__dot');
+  if (slides.length < 2) return;
 
-  // Wait for Three.js to load (defer'd in <head>)
-  const init = () => {
-    if (typeof THREE === 'undefined') return;
+  const interval = parseInt(carousel.dataset.autoplay || '6500', 10);
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let current = 0;
+  let timer = null;
 
-    const hero = canvas.parentElement;
-    const w = () => hero.clientWidth;
-    const h = () => hero.clientHeight;
-
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(45, w() / h(), 0.1, 100);
-    camera.position.set(0, 0, 12);
-
-    const renderer = new THREE.WebGLRenderer({
-      canvas,
-      alpha: true,
-      antialias: true,
-      powerPreference: 'low-power',
-    });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setSize(w(), h(), false);
-
-    // ── Lights ──
-    scene.add(new THREE.AmbientLight(0xffffff, 0.55));
-    const dir = new THREE.DirectionalLight(0xffffff, 0.7);
-    dir.position.set(5, 6, 5);
-    scene.add(dir);
-    const navLight = new THREE.PointLight(0x1E3A5F, 1.5, 35);
-    navLight.position.set(-6, 4, 4);
-    scene.add(navLight);
-    const goldLight = new THREE.PointLight(0xD9A03E, 1.4, 35);
-    goldLight.position.set(6, -3, 5);
-    scene.add(goldLight);
-    const redLight = new THREE.PointLight(0xC44A3D, 0.8, 25);
-    redLight.position.set(0, -5, 3);
-    scene.add(redLight);
-
-    // ── Shapes (right-side cluster only) ──
-    const palette = [0x1E3A5F, 0xD9A03E, 0xC44A3D, 0xECD9B3, 0xD9A03E];
-    const shapes = [];
-    const N = 7;
-
-    const makeGeo = (i) => {
-      const r = 0.22 + Math.random() * 0.28; // menor que antes
-      if (i % 3 === 0) return new THREE.IcosahedronGeometry(r, 0);
-      if (i % 3 === 1) return new THREE.SphereGeometry(r * 0.95, 48, 48);
-      return new THREE.OctahedronGeometry(r, 0);
-    };
-
-    for (let i = 0; i < N; i++) {
-      const geo = makeGeo(i);
-      const isGlass = i % 2 === 0;
-      const mat = new THREE.MeshPhysicalMaterial({
-        color: palette[i % palette.length],
-        roughness: isGlass ? 0.05 : 0.35,
-        metalness: isGlass ? 0.15 : 0.55,
-        transmission: isGlass ? 0.85 : 0,
-        thickness: isGlass ? 0.9 : 0,
-        clearcoat: 1,
-        clearcoatRoughness: 0.1,
-        ior: 1.4,
-      });
-      const mesh = new THREE.Mesh(geo, mat);
-      // Cluster shapes EXCLUSIVELY on the right (x: 1.8 → 6.5)
-      // where the hero__visual is. The CSS mask hides the left side anyway.
-      mesh.position.set(
-        1.8 + Math.random() * 4.7,
-        (Math.random() - 0.5) * 4,
-        (Math.random() - 0.5) * 3.5 - 1.5
-      );
-      mesh.userData = {
-        base: mesh.position.clone(),
-        rotSpeed: new THREE.Vector3(
-          (Math.random() - 0.5) * 0.0045,
-          (Math.random() - 0.5) * 0.005,
-          (Math.random() - 0.5) * 0.003
-        ),
-        floatOffset: Math.random() * Math.PI * 2,
-        floatSpeed: 0.25 + Math.random() * 0.4,
-        floatAmp: 0.2 + Math.random() * 0.3,
-      };
-      shapes.push(mesh);
-      scene.add(mesh);
-    }
-
-    // ── Mouse parallax (camera + hero cards) ──
-    const mouse = { x: 0, y: 0, tx: 0, ty: 0 };
-    const heroVisual = document.querySelector('.hero__visual');
-    let lastMove = 0;
-    hero.addEventListener('mousemove', (e) => {
-      const now = performance.now();
-      if (now - lastMove < 16) return; // throttle ~60fps
-      lastMove = now;
-      const rect = hero.getBoundingClientRect();
-      mouse.tx = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
-      mouse.ty = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
-      if (heroVisual) {
-        heroVisual.style.transform =
-          `rotateY(${mouse.tx * 4}deg) rotateX(${-mouse.ty * 3}deg) translateZ(0)`;
-      }
-    });
-    hero.addEventListener('mouseleave', () => {
-      mouse.tx = 0;
-      mouse.ty = 0;
-      if (heroVisual) heroVisual.style.transform = '';
-    });
-
-    // ── Resize ──
-    const onResize = () => {
-      const W = w(), H = h();
-      camera.aspect = W / H;
-      camera.updateProjectionMatrix();
-      renderer.setSize(W, H, false);
-    };
-    window.addEventListener('resize', onResize, { passive: true });
-
-    // ── Render loop ──
-    const clock = new THREE.Clock();
-    let rafId = null;
-    let visible = true;
-
-    // Pause when hero not in view (perf)
-    const heroIO = new IntersectionObserver(([entry]) => {
-      visible = entry.isIntersecting;
-      if (visible && !reduceMotion && !rafId) animate();
-    }, { threshold: 0.05 });
-    heroIO.observe(hero);
-
-    function animate() {
-      if (!visible) { rafId = null; return; }
-      rafId = requestAnimationFrame(animate);
-      const t = clock.getElapsedTime();
-
-      // Smooth camera follow
-      mouse.x += (mouse.tx - mouse.x) * 0.05;
-      mouse.y += (mouse.ty - mouse.y) * 0.05;
-      camera.position.x = mouse.x * 0.6;
-      camera.position.y = -mouse.y * 0.4;
-      camera.lookAt(0, 0, 0);
-
-      // Animate shapes
-      for (let i = 0; i < shapes.length; i++) {
-        const s = shapes[i];
-        const d = s.userData;
-        s.rotation.x += d.rotSpeed.x;
-        s.rotation.y += d.rotSpeed.y;
-        s.rotation.z += d.rotSpeed.z;
-        s.position.y = d.base.y + Math.sin(t * d.floatSpeed + d.floatOffset) * d.floatAmp;
-        s.position.x = d.base.x + Math.cos(t * d.floatSpeed * 0.7 + d.floatOffset) * (d.floatAmp * 0.6);
-      }
-
-      renderer.render(scene, camera);
-    }
-
-    // First render + fade in
-    renderer.render(scene, camera);
-    requestAnimationFrame(() => canvas.classList.add('is-ready'));
-
-    if (!reduceMotion) animate();
+  const go = (idx) => {
+    const next = ((idx % slides.length) + slides.length) % slides.length;
+    if (next === current) return;
+    slides[current].classList.remove('is-active');
+    dots[current].classList.remove('is-active');
+    dots[current].setAttribute('aria-selected', 'false');
+    current = next;
+    slides[current].classList.add('is-active');
+    dots[current].classList.add('is-active');
+    dots[current].setAttribute('aria-selected', 'true');
   };
 
-  // Three.js loads with defer, so DOM is ready when this script runs.
-  // But the THREE global might not be defined yet — poll briefly.
-  if (typeof THREE !== 'undefined') {
-    init();
+  const start = () => {
+    if (reduce) return;
+    stop();
+    timer = setInterval(() => go(current + 1), interval);
+  };
+  const stop = () => {
+    if (timer) { clearInterval(timer); timer = null; }
+  };
+
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => { go(i); start(); });
+  });
+
+  // Pause on hover, resume on leave
+  carousel.addEventListener('mouseenter', stop);
+  carousel.addEventListener('mouseleave', start);
+
+  // Pause when hero not in view (perf + politeness)
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) start();
+      else stop();
+    }, { threshold: 0.1 });
+    io.observe(carousel);
   } else {
-    let tries = 0;
-    const poll = setInterval(() => {
-      tries++;
-      if (typeof THREE !== 'undefined') {
-        clearInterval(poll);
-        init();
-      } else if (tries > 50) {
-        clearInterval(poll);
-        // Three.js failed to load — gracefully remove the canvas
-        canvas.remove();
-      }
-    }, 60);
+    start();
   }
+
+  // Keyboard support (← →) when carousel has focus
+  carousel.tabIndex = -1;
+  carousel.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') { go(current + 1); start(); }
+    if (e.key === 'ArrowLeft')  { go(current - 1); start(); }
+  });
 })();
 </script>
 
